@@ -1,8 +1,12 @@
 package com.monitor.magazines.controller;
 
 import com.monitor.magazines.domain.MagazineDto;
+import com.monitor.magazines.mapper.MagazineMapper;
+import com.monitor.magazines.service.MagazineService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -11,10 +15,14 @@ import java.util.List;
 @RestController
 @RequestMapping("monitor/digitalization/magazines")
 public class MagazineController {
+    @Autowired
+    private MagazineService magazineService;
+    @Autowired
+    private MagazineMapper magazineMapper;
 
     @RequestMapping(method = RequestMethod.GET, value = "getMagazines")
     public List<MagazineDto> getMagazines(){
-        return new ArrayList<>();
+        return magazineMapper.mapToMagazineDtoList(magazineService.getMagazines());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getMagazine")

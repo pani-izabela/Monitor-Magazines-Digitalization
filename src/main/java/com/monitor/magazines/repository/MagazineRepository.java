@@ -1,7 +1,11 @@
 package com.monitor.magazines.repository;
 
-/**
- * Created by 430 on 2017-10-05.
- */
-public class MagazineRepository {
+import com.monitor.magazines.domain.Magazine;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+public interface MagazineRepository extends CrudRepository<Magazine, Long>{
+    @Override
+    List<Magazine> findAll();
 }
