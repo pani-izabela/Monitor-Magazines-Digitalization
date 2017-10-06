@@ -34,9 +34,8 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.POST, value = "createMagazine")
     public void createMagazine(MagazineDto magazineDto){
-
     }
-
+//--------------------------------------------------------------------------------------
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityScannedVolumes")
     public Integer getQuantityScannedVolumes(Long magazineId){
         return 1;
@@ -66,6 +65,7 @@ public class MagazineController {
     public Integer getQuantitySmallPdfToDo(Long magazineId){
         return 1;
     }
+    //--------------------------------------------------------------------------------------
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIStart")
     public Double getPriceStageIStart(Long magazineId){
@@ -107,6 +107,8 @@ public class MagazineController {
         return 1.1;
     }
 
+    //--------------------------------------------------------------------------------------
+
     @RequestMapping(method = RequestMethod.GET, value = "getTimeStageIIIStart")
     public Double getTimeStageIIIStart(Long magazineId){
         return 1.1;
@@ -127,6 +129,8 @@ public class MagazineController {
         return 1.1;
     }
 
+    //--------------------------------------------------------------------------------------
+
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllScannedVolumes")
     public Integer getQuantityAllScannedVolumes(){
         return 2;
@@ -137,8 +141,8 @@ public class MagazineController {
         return 2;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getQuantityReadyBigPdf")
-    public Integer getQuantityReadyBigPdf(){
+    @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllReadyBigPdf")
+    public Integer getQuantityAllReadyBigPdf(){
         return 2;
     }
 
@@ -151,6 +155,7 @@ public class MagazineController {
     public Integer getQuantityAllReadySmallPdf(){
         return 2;
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllSmallPdfToDo")
     public Integer getQuantityAllSmallPdfToDo(){
         return 2;
