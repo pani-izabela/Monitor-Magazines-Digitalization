@@ -3,14 +3,14 @@ package com.monitor.magazines.controller;
 import com.monitor.magazines.domain.MagazineDto;
 import com.monitor.magazines.mapper.MagazineMapper;
 import com.monitor.magazines.service.MagazineService;
+import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("monitor/digitalization/magazines")
@@ -25,23 +25,23 @@ public class MagazineController {
         return magazineMapper.mapToMagazineDtoList(magazineService.getMagazines());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getMagazine")
-    public MagazineDto getMagazine(Long magazineId){
-        return new MagazineDto(1L, "Przykładowy tytuł", "2222-8765", 2009, 2, 200L, 40L);
-    }
+    /*@RequestMapping(method = RequestMethod.GET, value = "getMagazine")
+    public MagazineDto getMagazine(@RequestParam Long magazineId){
+        return magazineMapper.mapToMagazineDto(magazineService.getMagazine(magazineId));*/
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteMagazine")
-    public void deleteMagazine(Long magazineId){
-
+    public void deleteMagazine(@RequestParam Long magazineId){
+        magazineService.deleteMagazine(magazineId);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "updateMagazine")
-    public MagazineDto updateMagazine(MagazineDto magazineDto){
-        return new MagazineDto(1L, "Przykładowy tytuł drugi", "2222-8765", 2009, 3, 300L, 60L);
+    public MagazineDto updateMagazine(@RequestBody MagazineDto magazineDto){
+        return magazineMapper.mapToMagazineDto(magazineService.saveMagazine(magazineMapper.mapToMagazine(magazineDto)));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "createMagazine")
-    public void createMagazine(MagazineDto magazineDto){
+    @RequestMapping(method = RequestMethod.POST, value = "createMagazine", consumes = APPLICATION_JSON_VALUE)
+    public void createMagazine(@RequestBody MagazineDto magazineDto){
+        magazineService.saveMagazine(magazineMapper.mapToMagazine(magazineDto));
     }
 //--------------------------------------------------------------------------------------
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityScannedVolumes")

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MagazineService {
@@ -15,5 +16,17 @@ public class MagazineService {
 
     public List<Magazine> getMagazines(){
         return magazineRepository.findAll();
+    }
+
+    public Magazine saveMagazine(final Magazine magazine){
+        return magazineRepository.save(magazine);
+    }
+
+    public void deleteMagazine(final Long magazineId){
+        magazineRepository.deleteById(magazineId);
+    }
+
+    public Optional<Magazine> getMagazine(final Long magazineId){
+        return magazineRepository.findById(magazineId);
     }
 }
