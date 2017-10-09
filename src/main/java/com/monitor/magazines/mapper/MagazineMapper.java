@@ -16,7 +16,10 @@ public class MagazineMapper {
                 magazineDto.getFirstScannedYear(),
                 magazineDto.getVolumesToScann(),
                 magazineDto.getPagesToScann(),
-                magazineDto.getArticles());
+                magazineDto.getArticles(),
+                magazineDto.getScannedVolumes(),
+                magazineDto.getVolumesBigPdf(),
+                magazineDto.getVolumesSmallPdf());
     }
 
     public MagazineDto mapToMagazineDto(final Magazine magazine){
@@ -26,12 +29,17 @@ public class MagazineMapper {
                 magazine.getFirstScannedYear(),
                 magazine.getVolumesToScann(),
                 magazine.getPagesToScann(),
-                magazine.getArticles());
+                magazine.getArticles(),
+                magazine.getScannedVolumes(),
+                magazine.getVolumesBigPdf(),
+                magazine.getVolumesSmallPdf());
+                //(double) magazine.getPagesToScann()/magazine.getScannedVolumes(),
+                //(double) magazine.getArticles()/magazine.getScannedVolumes());
     }
 
     public List<MagazineDto> mapToMagazineDtoList(final List<Magazine> magazineList){
         return magazineList.stream()
-                .map(m-> new MagazineDto(m.getId(), m.getTitle(), m.getIssn(), m.getFirstScannedYear(), m.getVolumesToScann(), m.getPagesToScann(), m.getArticles()))
+                .map(m-> mapToMagazineDto(m))
                 .collect(Collectors.toList());
     }
 }

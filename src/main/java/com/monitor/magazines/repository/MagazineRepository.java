@@ -17,6 +17,6 @@ public interface MagazineRepository extends CrudRepository<Magazine, Long>{
     void deleteById(Long id);
 
     @Override
-    Optional<Magazine> findById(Long id);
+    Optional<Magazine> findById(Long magazineId);
 
 }
