@@ -15,6 +15,9 @@ public class MagazineService {
     @Autowired
     private MagazineRepository magazineRepository;
 
+    @Autowired
+    private StageService stageService;
+
     public List<Magazine> getMagazines(){
         return magazineRepository.findAll();
     }
@@ -35,7 +38,8 @@ public class MagazineService {
 
     public Double getPriceStageIStart(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        return magazine.getArticles() * 0.6;
+        stageService.getPriceStage(1);
+        return magazine.getArticles() * stageService.getPriceStage(1);
     }
 
     public Double getEstimatedPriceStageIActual(Long magazineId){
