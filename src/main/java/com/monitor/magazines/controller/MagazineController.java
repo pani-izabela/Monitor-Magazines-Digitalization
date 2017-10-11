@@ -3,6 +3,7 @@ package com.monitor.magazines.controller;
 import com.monitor.magazines.domain.MagazineDto;
 import com.monitor.magazines.mapper.MagazineMapper;
 import com.monitor.magazines.service.MagazineService;
+import com.monitor.magazines.service.StageService;
 import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

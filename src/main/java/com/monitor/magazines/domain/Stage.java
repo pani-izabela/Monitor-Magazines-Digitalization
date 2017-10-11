@@ -14,10 +14,11 @@ import javax.persistence.Id;
 @Entity(name="stages_digitalization")
 public class Stage {
     @Id
-    @Column(name="stage=id")
+    @Column(name="stage")
     private int stage;
     @Column(name="description")
     private String description;
     @Column(name="price")
     private double price;
+
 }

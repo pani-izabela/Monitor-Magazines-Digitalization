@@ -1,6 +1,7 @@
 package com.monitor.magazines.service;
 
 import com.monitor.magazines.domain.Magazine;
+import com.monitor.magazines.domain.Stage;
 import com.monitor.magazines.repository.MagazineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,43 +39,42 @@ public class MagazineService {
 
     public Double getPriceStageIStart(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        stageService.getPriceStage(1);
         return magazine.getArticles() * stageService.getPriceStage(1);
     }
 
     public Double getEstimatedPriceStageIActual(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        return (((double)magazine.getArticles() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf())) * 0.6;
+        return (((double)magazine.getArticles() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf())) * stageService.getPriceStage(1);
     }
 
     public Double getPriceStageIIStart(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        return (magazine.getPagesToScann()/2) * 0.5;
+        return (magazine.getPagesToScann()/2) * stageService.getPriceStage(2);
     }
 
     public Double getEstimatedPriceStageIIActual(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        return (((double)magazine.getPagesToScann() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getScannedVolumes()) * 0.5);
+        return (((double)magazine.getPagesToScann() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getScannedVolumes()) * stageService.getPriceStage(2));
     }
 
     public Double getPriceStageIIIStart(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        return (magazine.getVolumesToScann()) * 18.75;
+        return (magazine.getVolumesToScann()) * stageService.getPriceStage(3);
     }
 
     public Double getPriceStageIIIActual(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        return (magazine.getVolumesToScann() - magazine.getVolumesBigPdf()) * 18.75;
+        return (magazine.getVolumesToScann() - magazine.getVolumesBigPdf()) * stageService.getPriceStage(3);
     }
 
     public Double getPriceStageIVStart(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        return (magazine.getVolumesToScann()) * 6.25;
+        return (magazine.getVolumesToScann()) * stageService.getPriceStage(4);
     }
 
     public Double getPriceStageIVActual(Long magazineId){
         Magazine magazine = getMagazine(magazineId);
-        return (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * 6.25;
+        return (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * stageService.getPriceStage(4);
     }
 
     //------------------------------------------------------------------
@@ -150,10 +150,10 @@ public class MagazineService {
         List<Magazine> magazines = getMagazines();
         double sumPriceStart = 0;
         for(Magazine magazine : magazines){
-            double volume = magazine.getArticles() * 0.6
-                    + (magazine.getPagesToScann()/2) * 0.5
-                    + (magazine.getVolumesToScann()) * 18.75
-                    + (magazine.getVolumesToScann()) * 6.25;
+            double volume = magazine.getArticles() * stageService.getPriceStage(1)
+                    + (magazine.getPagesToScann()/2) * stageService.getPriceStage(2)
+                    + (magazine.getVolumesToScann()) * stageService.getPriceStage(3)
+                    + (magazine.getVolumesToScann()) * stageService.getPriceStage(4);
             sumPriceStart += volume;
         }
 
@@ -164,10 +164,10 @@ public class MagazineService {
         List<Magazine> magazines = getMagazines();
         double sumPriceActual = 0;
         for(Magazine magazine : magazines){
-            double volume = (((double)magazine.getArticles() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf())) * 0.6 +
-                    ((double)magazine.getPagesToScann() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getScannedVolumes()) * 0.5 +
-                    (magazine.getVolumesToScann() - magazine.getVolumesBigPdf()) * 18.75 +
-                    (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * 6.25;
+            double volume = (((double)magazine.getArticles() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf())) * stageService.getPriceStage(1) +
+                    ((double)magazine.getPagesToScann() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getScannedVolumes()) * stageService.getPriceStage(2) +
+                    (magazine.getVolumesToScann() - magazine.getVolumesBigPdf()) * stageService.getPriceStage(3) +
+                    (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * stageService.getPriceStage(4);
             sumPriceActual += volume;
         }
         return sumPriceActual;
