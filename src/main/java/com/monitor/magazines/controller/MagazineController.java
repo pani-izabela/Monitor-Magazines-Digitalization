@@ -47,9 +47,14 @@ public class MagazineController {
 
     //--------------------------------------------------------------------------------------
 
-    @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIStart")
-    public Double getPriceStageIStart(@RequestParam Long magazineId){
-        return magazineService.getPriceStageIStart(magazineId);
+    @RequestMapping(method = RequestMethod.GET, value = "getPriceStartFor")
+    public Double getPriceStartFor(@RequestParam Long magazineId, int stage){
+        return magazineService.getPriceStartFor(magazineId, stage);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getPriceActualFor")
+    public Double getPriceActualFor(@RequestParam Long magazineId, int stage){
+        return magazineService.getPriceActualFor(magazineId, stage);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getEstimatedPriceStageIActual")
@@ -57,29 +62,14 @@ public class MagazineController {
         return magazineService.getEstimatedPriceStageIActual(magazineId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIIStart")
-    public Double getPriceStageIIStart(@RequestParam Long magazineId){
-        return magazineService.getPriceStageIIStart(magazineId);
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "getEstimatedPriceStageIIActual")
     public Double getEstimatedPriceStageIIActual(@RequestParam Long magazineId){
         return magazineService.getEstimatedPriceStageIIActual(magazineId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIIIStart")
-    public Double getPriceStageIIIStart(@RequestParam Long magazineId){
-        return magazineService.getPriceStageIIIStart(magazineId);
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIIIActual")
     public Double getPriceStageIIIActual(@RequestParam Long magazineId){
         return magazineService.getPriceStageIIIActual(magazineId);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIVStart")
-    public Double getPriceStageIVStart(@RequestParam Long magazineId){
-        return magazineService.getPriceStageIVStart(magazineId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIVActual")
