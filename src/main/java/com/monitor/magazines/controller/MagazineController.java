@@ -59,24 +59,14 @@ public class MagazineController {
 
     //--------------------------------------------------------------------------------------
 
-    @RequestMapping(method = RequestMethod.GET, value = "getTimeStageIIIStart")
-    public Double getTimeStageIIIStart(@RequestParam Long magazineId){
-        return magazineService.getTimeStageIIIStart(magazineId);
+    @RequestMapping(method = RequestMethod.GET, value = "getTimeStartFor")
+    public Double getTimeStartFor(@RequestParam Long magazineId, int stage){
+        return magazineService.getTimeStartFor(magazineId, stage);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getTimeStageIIIActual")
-    public Double getTimeStageIIIActual(@RequestParam Long magazineId){
-        return magazineService.getTimeStageIIIActual(magazineId);
-    }
-    //zamienić double na Time
-    @RequestMapping(method = RequestMethod.GET, value = "getTimeStageIVStart")
-    public Double getTimeStageIVStart(@RequestParam Long magazineId){
-        return magazineService.getTimeStageIVStart(magazineId);
-    }
-    //zamienić double na Time
-    @RequestMapping(method = RequestMethod.GET, value = "getTimeStageIVActual")
-    public Double getTimeStageIVActual(@RequestParam Long magazineId){
-        return magazineService.getTimeStageIVActual(magazineId);
+    @RequestMapping(method = RequestMethod.GET, value = "getTimeActualFor")
+    public Double getTimeActualFor(@RequestParam Long magazineId, int stage){
+        return magazineService.getTimeActualFor(magazineId, stage);
     }
 
     //--------------------------------------------------------------------------------------

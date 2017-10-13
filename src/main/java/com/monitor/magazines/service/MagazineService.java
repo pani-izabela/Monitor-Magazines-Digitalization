@@ -72,27 +72,32 @@ public class MagazineService {
         }
         return price;
     }
+    //Czy ja powinnam robić warunek z else ostatni gdyby ktoś podał zły etap?
 
    //------------------------------------------------------------------
 
-    public Double getTimeStageIIIStart(Long magazineId){
+    public Double getTimeStartFor(Long magazineId, int stage){
         Magazine magazine = getMagazine(magazineId);
-        return (double)magazine.getVolumesToScann() * 1;
+        double time = 0.0;
+        if(stage==3){
+            time = (double)magazine.getVolumesToScann() * 1;
+        }
+        else if(stage==4){
+            time = ((double)magazine.getVolumesToScann() * 20) / 60;
+        }
+        return time;
     }
 
-    public Double getTimeStageIIIActual(Long magazineId){
+    public Double getTimeActualFor(Long magazineId, int stage){
         Magazine magazine = getMagazine(magazineId);
-        return ((double)magazine.getVolumesToScann() - (double)magazine.getVolumesBigPdf()) * 1;
-    }
-
-    public Double getTimeStageIVStart(Long magazineId){
-        Magazine magazine = getMagazine(magazineId);
-        return ((double)magazine.getVolumesToScann() * 20) / 60;
-    }
-
-    public Double getTimeStageIVActual(Long magazineId){
-        Magazine magazine = getMagazine(magazineId);
-        return ((((double)magazine.getVolumesToScann() - (double)magazine.getVolumesSmallPdf()) * 20) / 60);
+        double time = 0.0;
+        if(stage==3){
+            time = ((double)magazine.getVolumesToScann() - (double)magazine.getVolumesBigPdf()) * 1;
+        }
+        else if(stage==4){
+            time = ((((double)magazine.getVolumesToScann() - (double)magazine.getVolumesSmallPdf()) * 20) / 60);
+        }
+        return time;
     }
 
     //---------------------------------------------------------------------
