@@ -57,26 +57,6 @@ public class MagazineController {
         return magazineService.getPriceActualFor(magazineId, stage);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "getEstimatedPriceStageIActual")
-    public Double getEstimatedPriceStageIActual(@RequestParam Long magazineId){
-        return magazineService.getEstimatedPriceStageIActual(magazineId);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "getEstimatedPriceStageIIActual")
-    public Double getEstimatedPriceStageIIActual(@RequestParam Long magazineId){
-        return magazineService.getEstimatedPriceStageIIActual(magazineId);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIIIActual")
-    public Double getPriceStageIIIActual(@RequestParam Long magazineId){
-        return magazineService.getPriceStageIIIActual(magazineId);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "getPriceStageIVActual")
-    public Double getPriceStageIVActual(@RequestParam Long magazineId){
-        return magazineService.getPriceStageIVActual(magazineId);
-    }
-
     //--------------------------------------------------------------------------------------
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeStageIIIStart")
