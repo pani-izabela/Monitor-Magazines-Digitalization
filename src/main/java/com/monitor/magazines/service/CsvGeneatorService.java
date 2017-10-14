@@ -32,6 +32,7 @@ public class CsvGeneatorService {
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             Magazine magazine = magazineService.getMagazine(magazineId);
             bufferedWriter.write("tytuł" + "," + "issn" + "," + "sinceWhenDigitalization" + "," + "priceDigitalizationOnStart" + "," + "priceDigitalizationNow");
+            bufferedWriter.newLine();
             //czy to z kolejnej linii zapisze się w nowej linii?
             bufferedWriter.write(magazine.getTitle() + "," + magazine.getIssn() + "," + magazine.getFirstScannedYear() + "," + priceDigitalizationOnStart + "," + priceDigitalizationNow);
             bufferedWriter.close();
