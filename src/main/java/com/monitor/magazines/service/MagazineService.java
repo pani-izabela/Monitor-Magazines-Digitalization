@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,14 +51,14 @@ public class MagazineService {
             price = (magazine.getVolumesToScann()) * stageService.getPriceStage(3);
         }
         else if(stage==4){
-            price = (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * stageService.getPriceStage(4);
+            price = magazine.getVolumesToScann() * stageService.getPriceStage(4);
         }
         return price;
     }
 
     public Double getPriceActualFor(Long magazineId, int stage){
         Magazine magazine = getMagazine(magazineId);
-        double price=0.0;
+        double price = 0.0;
         if(stage==1){
             price = (((double)magazine.getArticles() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf())) * stageService.getPriceStage(1);
         }
@@ -70,6 +71,7 @@ public class MagazineService {
         else if(stage==4){
             price = (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * stageService.getPriceStage(4);
         }
+
         return price;
     }
     //Czy ja powinnam robić warunek z else ostatni gdyby ktoś podał zły etap?

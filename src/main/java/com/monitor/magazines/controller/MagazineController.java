@@ -2,14 +2,20 @@ package com.monitor.magazines.controller;
 
 import com.monitor.magazines.domain.MagazineDto;
 import com.monitor.magazines.mapper.MagazineMapper;
+import com.monitor.magazines.service.CsvGeneatorService;
 import com.monitor.magazines.service.MagazineService;
 import com.monitor.magazines.service.StageService;
 import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -20,6 +26,8 @@ public class MagazineController {
     private MagazineService magazineService;
     @Autowired
     private MagazineMapper magazineMapper;
+    @Autowired
+    private CsvGeneatorService csvGeneatorService;
 
     @RequestMapping(method = RequestMethod.GET, value = "getMagazines")
     public List<MagazineDto> getMagazines(){
@@ -54,19 +62,34 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceActualFor")
     public Double getPriceActualFor(@RequestParam Long magazineId, int stage){
-        return magazineService.getPriceActualFor(magazineId, stage);
+        double price = magazineService.getPriceActualFor(magazineId, stage);
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        decimalFormatSymbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
+        String doublePrice = decimalFormat.format(price);
+        price = Double.valueOf(doublePrice);
+        return price;
+        //pytanie, czy nie lepiej aby metoda getPriceActualFor tutaj była String i wówczas użyć System.out.printf("%.2f%n", price);?
     }
 
     //--------------------------------------------------------------------------------------
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeStartFor")
-    public Double getTimeStartFor(@RequestParam Long magazineId, int stage){
-        return magazineService.getTimeStartFor(magazineId, stage);
+    public String getTimeStartFor(@RequestParam Long magazineId, int stage){
+        double time = magazineService.getTimeStartFor(magazineId, stage);
+        int hours = (int)time;
+        int minutes = (int)(time*60)%60;
+        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
+        return hoursPlusMinutes;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeActualFor")
-    public Double getTimeActualFor(@RequestParam Long magazineId, int stage){
-        return magazineService.getTimeActualFor(magazineId, stage);
+    public String getTimeActualFor(@RequestParam Long magazineId, int stage){
+        double time = magazineService.getTimeActualFor(magazineId, stage);
+        int hours = (int)time;
+        int minutes = (int)(time*60)%60;
+        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
+        return hoursPlusMinutes;
     }
 
     //--------------------------------------------------------------------------------------
@@ -112,14 +135,32 @@ public class MagazineController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeAllStart")
-    public Double getTimeAllStart(){
-        return magazineService.getTimeAllStart();
+    public String getTimeAllStart() {
+        double time = magazineService.getTimeAllStart();
+        int hours = (int)time;
+        int minutes = (int)(time*60)%60;
+        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
+        return hoursPlusMinutes;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeAllActual")
-    public Double getTimeAllActual(){
-        return magazineService.getTimeAllActual();
+    public String getTimeAllActual(){
+        double time = magazineService.getTimeAllActual();
+        int hours = (int)time;
+        int minutes = (int)(time*60)%60;
+        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
+        return hoursPlusMinutes;
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
+    public void saveDataForSingelMagazine(@RequestParam Long magazineId, HttpServletResponse response){
+        csvGeneatorService.saveDataForSingelMagazine(magazineId, response);
+    }
+
+    /*@RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
+    public void saveDataForSingelMagazine(@RequestParam Long magazineId){
+        csvGeneatorService.saveDataForSingelMagazine(magazineId);
+    }*/
 
 
 }
