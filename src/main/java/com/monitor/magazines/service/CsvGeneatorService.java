@@ -31,9 +31,9 @@ public class CsvGeneatorService {
             FileWriter writer = new FileWriter(csvFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             Magazine magazine = magazineService.getMagazine(magazineId);
-            bufferedWriter.write("title" + "," + "issn" + "," + "sinceWhenDigitalization" + "," + "priceDigitalizationOnStart" + "," + "priceDigitalizationNow");
+            bufferedWriter.write("title" + "; " + "issn" + "; " + "sinceWhenDigitalization" + "; " + "priceDigitalizationOnStart" + "; " + "priceDigitalizationNow");
             bufferedWriter.newLine();
-            bufferedWriter.write(magazine.getTitle() + "," + magazine.getIssn() + "," + magazine.getFirstScannedYear() + "," + priceDigitalizationOnStart + "," + priceDigitalizationNow);
+            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + "; " + priceDigitalizationNow);
             bufferedWriter.close();
 
             File file = new File(csvFile);
