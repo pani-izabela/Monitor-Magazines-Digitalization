@@ -69,13 +69,22 @@ public class CsvGeneatorService {
             bufferedWriter.close();
 
             File file = new File(csvFile);
-            return file;
+            boolean fileExist = file.exists();
+            try{
+                if(!fileExist){
+                    fileExist = file.createNewFile();
+                }
+
+            }
+            catch(IOException e){
+
+            }
 
         }
         catch(IOException e){
             System.out.println("I cant create a file.");
         }
 
-        return new File(csvFile);
+        return new File("C:\\Users\\430\\Documents\\Development\\"+csvFile);
     }
 }*/

@@ -4,16 +4,14 @@ import com.monitor.magazines.domain.MagazineDto;
 import com.monitor.magazines.mapper.MagazineMapper;
 import com.monitor.magazines.service.CsvGeneatorService;
 import com.monitor.magazines.service.MagazineService;
-import com.monitor.magazines.service.StageService;
-import javafx.application.Application;
+
+import com.oracle.webservices.internal.api.message.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -154,12 +152,15 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
     public void saveDataForSingelMagazine(@RequestParam Long magazineId, HttpServletResponse response){
+        //response.setContentType("text/csv");
+        response.addHeader("content-disposition", "attachment;filename=report.csv");
         csvGeneatorService.saveDataForSingelMagazine(magazineId, response);
     }
 
     /*@RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
-    public void saveDataForSingelMagazine(@RequestParam Long magazineId){
-        csvGeneatorService.saveDataForSingelMagazine(magazineId);
+    public File saveDataForSingelMagazine(@RequestParam Long magazineId){
+        File file = csvGeneatorService.saveDataForSingelMagazine(magazineId);
+        return file;
     }*/
 
 
