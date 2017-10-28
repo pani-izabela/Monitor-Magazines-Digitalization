@@ -152,15 +152,18 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
     public void saveDataForSingelMagazine(@RequestParam Long magazineId, HttpServletResponse response){
-        //response.setContentType("text/csv");
+        response.setCharacterEncoding("windows-1250");
+        response.addHeader("content-type", "application/csv");
         response.addHeader("content-disposition", "attachment;filename=report.csv");
+
         csvGeneatorService.saveDataForSingelMagazine(magazineId, response);
     }
 
-    /*@RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
-    public File saveDataForSingelMagazine(@RequestParam Long magazineId){
-        File file = csvGeneatorService.saveDataForSingelMagazine(magazineId);
-        return file;
+    /*@RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazineToPDF")
+    public void saveDataForSingelMagazineToPDF(@RequestParam Long magazineId, HttpServletResponse response){
+        response.setContentType("application/pdf");
+        response.addHeader("content-disposition", "attachment;filename=report.pdf");
+        csvGeneatorService.saveDataForSingelMagazine(magazineId, response);
     }*/
 
 

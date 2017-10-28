@@ -1,15 +1,15 @@
 package com.monitor.magazines.service;
 
 import com.monitor.magazines.domain.Magazine;
-import com.monitor.magazines.repository.MagazineRepository;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 @Service
 public class CsvGeneatorService {
@@ -22,18 +22,29 @@ public class CsvGeneatorService {
                 + (magazineService.getPriceStartFor(magazineId, 2))
                 + (magazineService.getPriceStartFor(magazineId, 3))
                 + (magazineService.getPriceStartFor(magazineId, 4));
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        decimalFormatSymbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
+        String doublePrice = decimalFormat.format(priceDigitalizationOnStart);
+        priceDigitalizationOnStart = Double.valueOf(doublePrice);
 
         double priceDigitalizationNow = (magazineService.getPriceActualFor(magazineId, 1))
                 + (magazineService.getPriceActualFor(magazineId, 2))
                 + (magazineService.getPriceActualFor(magazineId, 3))
                 + (magazineService.getPriceActualFor(magazineId, 4));
+        DecimalFormatSymbols decimalFormatSymbols1 = new DecimalFormatSymbols(Locale.getDefault());
+        decimalFormatSymbols1.setDecimalSeparator('.');
+        DecimalFormat decimalFormat1 = new DecimalFormat("0.00", decimalFormatSymbols);
+        String doublePrice1 = decimalFormat1.format(priceDigitalizationNow);
+        priceDigitalizationNow = Double.valueOf(doublePrice1);
+
         try{
             FileWriter writer = new FileWriter(csvFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             Magazine magazine = magazineService.getMagazine(magazineId);
-            bufferedWriter.write("title" + "; " + "issn" + "; " + "sinceWhenDigitalization" + "; " + "priceDigitalizationOnStart" + "; " + "priceDigitalizationNow");
+            bufferedWriter.write("Tytuł" + "; " + "ISSN" + "; " + "Pierwszy digitalizowany rocznik" + "; " + "Początkowa cena digitalizacji" + "; " + "Aktualna cena digitalizacji");
             bufferedWriter.newLine();
-            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + "; " + priceDigitalizationNow);
+            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + " zł" + "; " + priceDigitalizationNow + " zł");
             bufferedWriter.close();
 
             File file = new File(csvFile);
@@ -42,49 +53,32 @@ public class CsvGeneatorService {
 
         }
         catch(IOException e){
-            System.out.println("I can't create a file.");
+            System.out.println("Nie mogę utworzyć pliku.");
         }
     }
-}
 
-    /*public File saveDataForSingelMagazine(Long magazineId){
-        String csvFile = "report.csv";
-        double priceDigitalizationOnStart = (magazineService.getPriceStartFor(magazineId, 1))
-                + (magazineService.getPriceStartFor(magazineId, 2))
-                + (magazineService.getPriceStartFor(magazineId, 3))
-                + (magazineService.getPriceStartFor(magazineId, 4));
-
-        double priceDigitalizationNow = (magazineService.getPriceActualFor(magazineId, 1))
-                + (magazineService.getPriceActualFor(magazineId, 2))
-                + (magazineService.getPriceActualFor(magazineId, 3))
-                + (magazineService.getPriceActualFor(magazineId, 4));
+    /*public void saveDataForSingelMagazineToPDF(Long magazineId, HttpServletResponse response){
+        String pdfFile = "reportPDF.pdf";
+        String napis = "Testowy napis";
         try{
-            FileWriter writer = new FileWriter(csvFile);
+            FileWriter writer = new FileWriter(pdfFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            Magazine magazine = magazineService.getMagazine(magazineId);
-            bufferedWriter.write("tytuł" + "," + "issn" + "," + "sinceWhenDigitalization" + "," + "priceDigitalizationOnStart" + "," + "priceDigitalizationNow");
+            bufferedWriter.write("Pierwszy napis");
             bufferedWriter.newLine();
-            //czy to z kolejnej linii zapisze się w nowej linii?
-            bufferedWriter.write(magazine.getTitle() + "," + magazine.getIssn() + "," + magazine.getFirstScannedYear() + "," + priceDigitalizationOnStart + "," + priceDigitalizationNow);
+            bufferedWriter.write("Drugi napis");
             bufferedWriter.close();
 
-            File file = new File(csvFile);
-            boolean fileExist = file.exists();
-            try{
-                if(!fileExist){
-                    fileExist = file.createNewFile();
-                }
-
-            }
-            catch(IOException e){
-
-            }
+            File file = new File(pdfFile);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            IOUtils.copy(fileInputStream, response.getOutputStream());
 
         }
-        catch(IOException e){
-            System.out.println("I cant create a file.");
+        catch (IOException e){
+            System.out.println("Nie mogę utworzyć pliku pdf.");
         }
 
-        return new File("C:\\Users\\430\\Documents\\Development\\"+csvFile);
-    }
-}*/
+    }*/
+
+}
+
+
