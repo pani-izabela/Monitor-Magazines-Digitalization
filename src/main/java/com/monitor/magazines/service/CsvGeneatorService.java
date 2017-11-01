@@ -82,11 +82,10 @@ public class CsvGeneatorService {
         String doublePrice1 = decimalFormat1.format(priceDigitalizationNow);
         priceDigitalizationNow = Double.valueOf(doublePrice1);
 
-        Document document = new Document();
-
 
         try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
             Magazine magazine = magazineService.getMagazine(magazineId);
 
             document.open();
@@ -94,7 +93,6 @@ public class CsvGeneatorService {
             document.add(new Paragraph("\n"));
             document.add(new Paragraph(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + " zł" + "; " + priceDigitalizationNow + " zł"));
             document.close();
-            writer.close();
         } catch (IOException e) {
             System.out.println("I can't create pdf.");
         } catch (DocumentException e) {
