@@ -43,19 +43,19 @@ public class Magazine {
     @NotNull
     private Long articles;
     @Column(name="scannedVolumes")
-    @Min(value = 0, message = "Liczba nie może być mniejsza niż 0")//
-    @NotEmpty(message = "Podana liczba nie może być większa niż liczba wszystkich numerów do skanowania, czyli niż wartość wpisana w pole: volumesToScann.")
+    @Min(value = 0, message = "The number have to be higher than 0")
+    @NotEmpty(message = "This field is required")
     //@Max(value = volumesToScann) a może to trzeba załatwić dalej ifem/wyjątkiem np. że jeśli scannedVolumes>volumesToScann
     //to wyrzuć komunikat "podana wartość nie może być większa niż liczba nr do skanowania"
     //to powinno być na etapie wpisywania danych do bazy czyli przy saveMagazine lub updateMagazine||createMagazine
     private Integer scannedVolumes;
     @Column(name="volumesBigPdf")
-    @Min(value = 0, message = "Liczba nie może być mniejsza niż 0") //
-    @NotEmpty(message = "Podana liczba nie może być większa niż liczba wszystkich numerów do skanowania, czyli niż wartość wpisana w pole: volumesToScann.")
+    @Min(value = 0, message = "The number have to be higher than 0")
+    @NotEmpty(message = "This field is required")
     private Integer volumesBigPdf;
     @Column(name="volumesSmallPdf")
-    @Min(value = 0, message = "Liczba nie może być mniejsza niż 0") //
-    @NotEmpty(message = "Podana liczba nie może być większa niż liczba wszystkich numerów do skanowania, czyli niż wartość wpisana w pole: volumesToScann.")
+    @Min(value = 0, message = "The number have to be higher than 0")
+    @NotEmpty(message = "This field is required")
     private Integer volumesSmallPdf;
 
 }

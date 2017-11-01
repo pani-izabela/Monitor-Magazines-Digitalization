@@ -5,11 +5,11 @@ import com.monitor.magazines.mapper.MagazineMapper;
 import com.monitor.magazines.service.CsvGeneatorService;
 import com.monitor.magazines.service.MagazineService;
 
-import com.oracle.webservices.internal.api.message.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
@@ -55,7 +55,13 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceStartFor")
     public Double getPriceStartFor(@RequestParam Long magazineId, int stage){
-        return magazineService.getPriceStartFor(magazineId, stage);
+        double price = magazineService.getPriceStartFor(magazineId, stage);
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        decimalFormatSymbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
+        String doublePrice = decimalFormat.format(price);
+        price = Double.valueOf(doublePrice);
+        return price;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceActualFor")
@@ -124,12 +130,24 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceAllStagesStart")
     public Double getPriceAllStagesStart(){
-        return magazineService.getPriceAllStagesStart();
+        double price = magazineService.getPriceAllStagesStart();
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        decimalFormatSymbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
+        String doublePrice = decimalFormat.format(price);
+        price = Double.valueOf(doublePrice);
+        return price;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceAllStagesActual")
     public Double getPriceAllStagesActual(){
-        return magazineService.getPriceAllStagesActual();
+        double price = magazineService.getPriceAllStagesActual();
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        decimalFormatSymbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
+        String doublePrice = decimalFormat.format(price);
+        price = Double.valueOf(doublePrice);
+        return price;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeAllStart")
@@ -152,7 +170,7 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
     public void saveDataForSingelMagazine(@RequestParam Long magazineId, HttpServletResponse response){
-        response.setCharacterEncoding("windows-1250");
+        //response.setCharacterEncoding("utf-8");
         response.addHeader("content-type", "application/csv");
         response.addHeader("content-disposition", "attachment;filename=report.csv");
 
