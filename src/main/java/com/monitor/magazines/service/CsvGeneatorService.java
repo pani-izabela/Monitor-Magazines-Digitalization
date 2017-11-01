@@ -11,6 +11,9 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
+
 @Service
 public class CsvGeneatorService {
     @Autowired
@@ -56,7 +59,8 @@ public class CsvGeneatorService {
             System.out.println("I can't create file.");
         }
     }
-    /*public void saveDataForSingelMagazineToPdf(Long magazineId, HttpServletResponse response){
+
+    public void saveDataForSingelMagazineToPdf(Long magazineId, HttpServletResponse response) {
         String pdfFile = "report.pdf";
         double priceDigitalizationOnStart = (magazineService.getPriceStartFor(magazineId, 1))
                 + (magazineService.getPriceStartFor(magazineId, 2))
@@ -78,13 +82,26 @@ public class CsvGeneatorService {
         String doublePrice1 = decimalFormat1.format(priceDigitalizationNow);
         priceDigitalizationNow = Double.valueOf(doublePrice1);
 
-        try{
+        Document document = new Document();
 
-        }
-        catch (IOException e){
+
+        try {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
+            Magazine magazine = magazineService.getMagazine(magazineId);
+
+            document.open();
+            document.add(new Paragraph("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time"));
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + " zł" + "; " + priceDigitalizationNow + " zł"));
+            document.close();
+            writer.close();
+        } catch (IOException e) {
             System.out.println("I can't create pdf.");
-        }*/
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+    }
 
-}
+    }
 
 
