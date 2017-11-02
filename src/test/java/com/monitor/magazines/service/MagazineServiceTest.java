@@ -1,7 +1,6 @@
 package com.monitor.magazines.service;
 
 import com.monitor.magazines.domain.Magazine;
-import com.monitor.magazines.domain.MagazineDto;
 import com.monitor.magazines.domain.Stage;
 import com.monitor.magazines.repository.MagazineRepository;
 import org.junit.Test;
@@ -13,19 +12,21 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MagazineServiceTest {
 
-    @InjectMocks
+    @Mock
     private MagazineService magazineService;
 
-    @Mock
+    /*@Mock
     private MagazineRepository magazineRepository;
 
     @Mock
-    private StageService stageService;
+    private StageService stageService;*/
 
     @Test
     public void testGetMagazines() {
@@ -35,8 +36,8 @@ public class MagazineServiceTest {
         ArrayList magazinesList = new ArrayList<Magazine>();
         magazinesList.add(magazine);
         magazinesList.add(magazine1);
-        when(magazineService.getMagazines()).thenReturn(magazinesList);
         //When
+        when(magazineService.getMagazines()).thenReturn(magazinesList);
         //Then
         assertEquals(2, magazinesList.size());
     }
@@ -45,11 +46,10 @@ public class MagazineServiceTest {
     public void testSaveMagazine() {
         //Given
         Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
-        when(magazineService.saveMagazine(magazine)).thenReturn(magazine);
         //When
-
+        when(magazineService.saveMagazine(magazine)).thenReturn(magazine);
         //Then
-        //assertEquals(1, magazine.getId());
+        //assertEquals(1L, magazine.getId());
         assertEquals("Tytuł testowy", magazine.getTitle());
 
     }
@@ -57,20 +57,21 @@ public class MagazineServiceTest {
     @Test
     public void testDeleteMagazine() {
         //Given
-        Long magazineId = 1L;
         Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
-
+        Long magazineId = magazine.getId();
         //When
+        magazineService.deleteMagazine(magazineId);
         //Then
+        verify(magazineService, times(1)).deleteMagazine(magazineId);
     }
 
     @Test
     public void testGetMagazine() {
         //Given
-        Long magazineId = 1L;
         Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
-        when(magazineService.getMagazine(magazineId)).thenReturn(magazine);
+        Long magazineId = magazine.getId();
         //When
+        when(magazineService.getMagazine(magazineId)).thenReturn(magazine);
         //Then
         assertEquals("Tytuł testowy", magazine.getTitle());
         //assertEquals(1999, magazine.getFirstScannedYear());
