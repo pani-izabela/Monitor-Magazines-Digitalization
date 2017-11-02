@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -52,7 +53,7 @@ public class MagazineServiceTestSuite {
         //When
         Magazine returnMagazine = magazineService.saveMagazine(magazine);
         //Then
-        //assertEquals("1", id);
+        //assertEquals("1L", returnMagazine.getId());
         assertEquals("Tytuł testowy", returnMagazine.getTitle());
 
     }
@@ -87,10 +88,12 @@ public class MagazineServiceTestSuite {
         //Given
         Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
         Stage stageExample = new Stage(2, "Description", 0.5);
+        Long id = magazine.getId();
+        int stage = stageExample.getStage();
         double priceStage = stageExample.getPrice()*(magazine.getPagesToScann()/2);
         when(stageService.getPriceStage(stageExample.getStage())).thenReturn(priceStage);
         //When
-        double price = priceStage;
+        double price = magazineService.getPriceStartFor(id, stage);
         //Then
         assertEquals(250.00, price, 0.01);
     }
