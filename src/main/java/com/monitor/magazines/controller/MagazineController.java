@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -178,9 +179,10 @@ public class MagazineController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazineToPdf")
-    public void saveDataForSingelMagazineToPdf(@RequestParam Long magazineId, HttpServletResponse response){
-        response.setContentType("application/pdf");
+    public void saveDataForSingelMagazineToPdf(@RequestParam Long magazineId, HttpServletResponse response) throws IOException {
+        response.addHeader("content-type", "application/pdf");
         response.addHeader("content-disposition", "attachment;filename=report.pdf");
+        response.flushBuffer();
         csvGeneatorService.saveDataForSingelMagazineToPdf(magazineId, response);
     }
 

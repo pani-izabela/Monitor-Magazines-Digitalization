@@ -33,8 +33,6 @@ public class MagazineMapper {
                 magazine.getScannedVolumes(),
                 magazine.getVolumesBigPdf(),
                 magazine.getVolumesSmallPdf());
-                //(double) magazine.getPagesToScann()/magazine.getScannedVolumes(),
-                //(double) magazine.getArticles()/magazine.getScannedVolumes());
     }
 
     public List<MagazineDto> mapToMagazineDtoList(final List<Magazine> magazineList){

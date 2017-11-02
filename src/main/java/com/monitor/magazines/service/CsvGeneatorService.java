@@ -47,7 +47,7 @@ public class CsvGeneatorService {
             Magazine magazine = magazineService.getMagazine(magazineId);
             bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
             bufferedWriter.newLine();
-            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + " zł" + "; " + priceDigitalizationNow + " zł");
+            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + " PLN" + "; " + priceDigitalizationNow + " PLN");
             bufferedWriter.close();
 
             File file = new File(csvFile);
@@ -85,14 +85,24 @@ public class CsvGeneatorService {
 
         try {
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
             Magazine magazine = magazineService.getMagazine(magazineId);
+            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
 
             document.open();
-            document.add(new Paragraph("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time"));
+            document.add(new Paragraph("Title: " + magazine.getTitle()));
             document.add(new Paragraph("\n"));
-            document.add(new Paragraph(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + " zł" + "; " + priceDigitalizationNow + " zł"));
+            document.add(new Paragraph("ISSN: " + magazine.getIssn()));
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph("First digitalized year's issue: " + magazine.getFirstScannedYear()));
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph("Price of digitalization on start: " + priceDigitalizationOnStart + " PLN"));
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph("Price of digitalization at the indicated time: " + priceDigitalizationNow + " PLN"));
             document.close();
+
+            File file = new File(pdfFile);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            IOUtils.copy(fileInputStream, response.getOutputStream());
         } catch (IOException e) {
             System.out.println("I can't create pdf.");
         } catch (DocumentException e) {
