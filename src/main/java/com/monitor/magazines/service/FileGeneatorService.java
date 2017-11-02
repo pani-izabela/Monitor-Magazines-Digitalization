@@ -15,7 +15,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
 @Service
-public class CsvGeneatorService {
+public class FileGeneatorService {
     @Autowired
     private MagazineService magazineService;
 

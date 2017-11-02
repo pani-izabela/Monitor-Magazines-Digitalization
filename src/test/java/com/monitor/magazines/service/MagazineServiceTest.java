@@ -1,0 +1,177 @@
+package com.monitor.magazines.service;
+
+import com.monitor.magazines.domain.Magazine;
+import com.monitor.magazines.domain.MagazineDto;
+import com.monitor.magazines.repository.MagazineRepository;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
+public class MagazineServiceTest {
+
+    @InjectMocks
+    private MagazineService magazineService;
+
+    @Mock
+    private MagazineRepository magazineRepository;
+
+    @Mock
+    private StageService stageService;
+
+    @Test
+    public void testGetMagazines() {
+        //Given
+        Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
+        Magazine magazine1 = new Magazine(2L, "Tytuł testowy1", "4444-4321", 1956, 50, 5000L, 250L, 15, 10, 5);
+        ArrayList magazinesList = new ArrayList<Magazine>();
+        magazinesList.add(magazine);
+        magazinesList.add(magazine1);
+        when(magazineService.getMagazines()).thenReturn(magazinesList);
+        //When
+        //Then
+        assertEquals(2, magazinesList.size());
+    }
+
+    @Test
+    public void testSaveMagazine() {
+        //Given
+        Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
+        when(magazineService.saveMagazine(magazine)).thenReturn(magazine);
+        //When
+
+        //Then
+        //assertEquals(1, magazine.getId());
+        assertEquals("Tytuł testowy", magazine.getTitle());
+
+    }
+
+    @Test
+    public void testDeleteMagazine() {
+        //Given
+        Long magazineId = 1L;
+        Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
+
+        //When
+        //Then
+    }
+
+    @Test
+    public void testGetMagazine() {
+        //Given
+        Long magazineId = 1L;
+        Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
+        when(magazineService.getMagazine(magazineId)).thenReturn(magazine);
+        //When
+        //Then
+        assertEquals("Tytuł testowy", magazine.getTitle());
+        //assertEquals(1999, magazine.getFirstScannedYear());
+
+    }
+
+    @Test
+    public void testGetPriceStartFor() {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void testGetPriceActualFor() {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getTimeStartFor() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getTimeActualFor() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getQuantityAllVolumes() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getQuantityAllVolumesToScanne() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getQuantityAllReadyBigPdf() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getQuantityAllBigPdfToDo() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getQuantityAllReadySmallPdf() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getQuantityAllSmallPdfToDo() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getPriceAllStagesStart() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getPriceAllStagesActual() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getTimeAllStart() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+    @Test
+    public void getTimeAllActual() throws Exception {
+        //Given
+        //When
+        //Then
+    }
+
+}
