@@ -13,7 +13,7 @@ public class StageService {
     @Autowired
     private StageRepozitory stageRepozitory;
 
-    //to chyba mi nie potrzebna metoda
+    /*//to chyba mi nie potrzebna metoda
     public List<Stage> getStages(){
         return stageRepozitory.findAll();
     }
@@ -21,7 +21,7 @@ public class StageService {
     //czy ta metoda w ogóle jest mi potrzebna skoro nie mam tego w kontrolerze
     public Stage saveStage(Stage stage){
         return stageRepozitory.save(stage);
-    }
+    }*/
 
     public Optional<Stage> getStage(Integer stage){
         return stageRepozitory.findById(stage);

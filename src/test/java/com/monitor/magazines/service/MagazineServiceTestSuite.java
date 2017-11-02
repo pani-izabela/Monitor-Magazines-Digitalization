@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
@@ -17,40 +18,42 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MagazineServiceTest {
+public class MagazineServiceTestSuite {
 
-    @Mock
+    @InjectMocks
     private MagazineService magazineService;
 
-    /*@Mock
+    @Mock
     private MagazineRepository magazineRepository;
 
     @Mock
-    private StageService stageService;*/
+    private StageService stageService;
 
     @Test
     public void testGetMagazines() {
         //Given
         Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
         Magazine magazine1 = new Magazine(2L, "Tytuł testowy1", "4444-4321", 1956, 50, 5000L, 250L, 15, 10, 5);
-        ArrayList magazinesList = new ArrayList<Magazine>();
+        ArrayList<Magazine> magazinesList = new ArrayList<Magazine>();
         magazinesList.add(magazine);
         magazinesList.add(magazine1);
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
-        when(magazineService.getMagazines()).thenReturn(magazinesList);
+        int quatityMagazines = magazineService.getMagazines().size();
         //Then
-        assertEquals(2, magazinesList.size());
+        assertEquals(2, quatityMagazines);
     }
 
     @Test
     public void testSaveMagazine() {
         //Given
         Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
+        when(magazineRepository.save(magazine)).thenReturn(magazine);
         //When
-        when(magazineService.saveMagazine(magazine)).thenReturn(magazine);
+        Magazine returnMagazine = magazineService.saveMagazine(magazine);
         //Then
-        //assertEquals(1L, magazine.getId());
-        assertEquals("Tytuł testowy", magazine.getTitle());
+        //assertEquals("1", id);
+        assertEquals("Tytuł testowy", returnMagazine.getTitle());
 
     }
 
@@ -62,7 +65,7 @@ public class MagazineServiceTest {
         //When
         magazineService.deleteMagazine(magazineId);
         //Then
-        verify(magazineService, times(1)).deleteMagazine(magazineId);
+        verify(magazineRepository, times(1)).deleteById(magazineId);
     }
 
     @Test
@@ -70,11 +73,12 @@ public class MagazineServiceTest {
         //Given
         Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
         Long magazineId = magazine.getId();
+        when(magazineRepository.findById(magazineId)).thenReturn(Optional.of(magazine));
         //When
-        when(magazineService.getMagazine(magazineId)).thenReturn(magazine);
+        Magazine returnMagazine = magazineService.getMagazine(magazineId);
         //Then
-        assertEquals("Tytuł testowy", magazine.getTitle());
-        //assertEquals(1999, magazine.getFirstScannedYear());
+        assertEquals("Tytuł testowy", returnMagazine.getTitle());
+        //assertEquals(1999, returnMagazine.getFirstScannedYear());
 
     }
 
@@ -83,13 +87,12 @@ public class MagazineServiceTest {
         //Given
         Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
         Stage stageExample = new Stage(2, "Description", 0.5);
-        Long magazineId = magazine.getId();
-        int stage = stageExample.getStage();
-        double price = magazineService.getPriceStartFor(magazineId, stage);
-        when(magazineService.getPriceStartFor(magazineId, stage)).thenReturn(price);
+        double priceStage = stageExample.getPrice()*(magazine.getPagesToScann()/2);
+        when(stageService.getPriceStage(stageExample.getStage())).thenReturn(priceStage);
         //When
-
+        double price = priceStage;
         //Then
+        assertEquals(250.00, price, 0.01);
     }
 
     @Test

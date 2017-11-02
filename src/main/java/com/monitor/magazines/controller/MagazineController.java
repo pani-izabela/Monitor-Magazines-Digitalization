@@ -181,7 +181,7 @@ public class MagazineController {
     public void saveDataForSingelMagazineToPdf(@RequestParam Long magazineId, HttpServletResponse response) throws IOException {
         response.addHeader("content-type", "application/pdf");
         response.addHeader("content-disposition", "attachment;filename=report.pdf");
-        response.flushBuffer();
+        //response.flushBuffer();
         csvGeneatorService.saveDataForSingelMagazineToPdf(magazineId, response);
     }
 

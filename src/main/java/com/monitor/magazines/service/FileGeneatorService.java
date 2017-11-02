@@ -53,7 +53,7 @@ public class FileGeneatorService {
             File file = new File(csvFile);
             FileInputStream fileInputStream = new FileInputStream(file);
             IOUtils.copy(fileInputStream, response.getOutputStream());
-
+            fileInputStream.close();
         }
         catch(IOException e){
             System.out.println("I can't create file.");
@@ -108,6 +108,7 @@ public class FileGeneatorService {
             File file = new File(pdfFile);
             FileInputStream fileInputStream = new FileInputStream(file);
             IOUtils.copy(fileInputStream, response.getOutputStream());
+            fileInputStream.close();
         } catch (IOException e) {
             System.out.println("I can't create pdf.");
         } catch (DocumentException e) {
