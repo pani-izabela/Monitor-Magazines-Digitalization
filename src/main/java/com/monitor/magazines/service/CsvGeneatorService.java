@@ -89,6 +89,8 @@ public class CsvGeneatorService {
             PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
 
             document.open();
+            document.add(new Paragraph("Report costs of digitalization for single magazin: "));
+            document.add(new Paragraph("\n"));
             document.add(new Paragraph("Title: " + magazine.getTitle()));
             document.add(new Paragraph("\n"));
             document.add(new Paragraph("ISSN: " + magazine.getIssn()));
