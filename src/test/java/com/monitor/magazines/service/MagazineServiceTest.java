@@ -2,6 +2,7 @@ package com.monitor.magazines.service;
 
 import com.monitor.magazines.domain.Magazine;
 import com.monitor.magazines.domain.MagazineDto;
+import com.monitor.magazines.domain.Stage;
 import com.monitor.magazines.repository.MagazineRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,7 +80,14 @@ public class MagazineServiceTest {
     @Test
     public void testGetPriceStartFor() {
         //Given
+        Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
+        Stage stageExample = new Stage(2, "Description", 0.5);
+        Long magazineId = magazine.getId();
+        int stage = stageExample.getStage();
+        double price = magazineService.getPriceStartFor(magazineId, stage);
+        when(magazineService.getPriceStartFor(magazineId, stage)).thenReturn(price);
         //When
+
         //Then
     }
 
