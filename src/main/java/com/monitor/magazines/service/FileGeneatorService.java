@@ -89,17 +89,20 @@ public class FileGeneatorService {
             PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
 
             document.open();
-            document.add(new Paragraph("Report costs of digitalization for single magazin: "));
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("Title: " + magazine.getTitle()));
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("ISSN: " + magazine.getIssn()));
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("First digitalized year's issue: " + magazine.getFirstScannedYear()));
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("Price of digitalization on start: " + priceDigitalizationOnStart + " PLN"));
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("Price of digitalization at the indicated time: " + priceDigitalizationNow + " PLN"));
+            Font fontHead = FontFactory.getFont(FontFactory.TIMES_BOLD, 16, BaseColor.BLUE);
+            Font fontBody = FontFactory.getFont(FontFactory.TIMES, 12, BaseColor.BLACK);
+            Font fontSpace = FontFactory.getFont(FontFactory.TIMES, 8);
+            document.add(new Paragraph("Report costs of digitalization for single magazin: ", fontHead));
+            document.add(new Paragraph("\n", fontSpace));
+            document.add(new Paragraph("Title: " + magazine.getTitle(), fontBody));
+            document.add(new Paragraph("\n", fontSpace));
+            document.add(new Paragraph("ISSN: " + magazine.getIssn(), fontBody));
+            document.add(new Paragraph("\n", fontSpace));
+            document.add(new Paragraph("First digitalized year's issue: " + magazine.getFirstScannedYear(), fontBody));
+            document.add(new Paragraph("\n", fontSpace));
+            document.add(new Paragraph("Price of digitalization on start: " + priceDigitalizationOnStart + " PLN", fontBody));
+            document.add(new Paragraph("\n", fontSpace));
+            document.add(new Paragraph("Price of digitalization at the indicated time: " + priceDigitalizationNow + " PLN", fontBody));
             document.close();
 
             File file = new File(pdfFile);
