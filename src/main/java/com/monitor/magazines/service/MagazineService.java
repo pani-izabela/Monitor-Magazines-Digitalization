@@ -40,7 +40,7 @@ public class MagazineService {
 
     public Double getPriceStartFor(Long magazineId, int stage){
         Magazine magazine = getMagazine(magazineId);
-        double price=0.0;
+        double price=0;
         if(stage==1){
             price = magazine.getArticles() * stageService.getPriceStage(stage);
         }

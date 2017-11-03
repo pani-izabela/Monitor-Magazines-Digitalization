@@ -53,7 +53,8 @@ public class MagazineServiceTestSuite {
         //When
         Magazine returnMagazine = magazineService.saveMagazine(magazine);
         //Then
-        //assertEquals("1L", returnMagazine.getId());
+        assertEquals(1, (long)returnMagazine.getId());
+        assertEquals(5, (int)returnMagazine.getVolumesToScann());
         assertEquals("Tytuł testowy", returnMagazine.getTitle());
 
     }
@@ -79,7 +80,7 @@ public class MagazineServiceTestSuite {
         Magazine returnMagazine = magazineService.getMagazine(magazineId);
         //Then
         assertEquals("Tytuł testowy", returnMagazine.getTitle());
-        //assertEquals(1999, returnMagazine.getFirstScannedYear());
+        assertEquals(1999, (int)returnMagazine.getFirstScannedYear());
 
     }
 
@@ -90,8 +91,7 @@ public class MagazineServiceTestSuite {
         Stage stageExample = new Stage(1, "Description", 0.6);
         Long id = magazine.getId();
         int stage = stageExample.getStage();
-        double priceStage = stageExample.getPrice()*(magazine.getArticles());
-        when(stageService.getPriceStage(stageExample.getStage())).thenReturn(priceStage);
+        when(stageService.getPriceStage(stageExample.getStage())).thenReturn(stageExample.getPrice());
         when(magazineRepository.findById(magazine.getId())).thenReturn(Optional.of(magazine));
         //When
         double price = magazineService.getPriceStartFor(id, stage);
@@ -102,22 +102,46 @@ public class MagazineServiceTestSuite {
     @Test
     public void testGetPriceActualFor() {
         //Given
+        Magazine magazine = new Magazine(3L, "Tytuł testowy", "0000-1234", 1999, 10, 2500L, 100L, 5, 5, 5);
+        Stage stageExample = new Stage(1, "Description", 0.6);
+        Long id = magazine.getId();
+        int stage = stageExample.getStage();
+        when(stageService.getPriceStage(stageExample.getStage())).thenReturn(stageExample.getPrice());
+        when(magazineRepository.findById(magazine.getId())).thenReturn(Optional.of(magazine));
         //When
+        double price = magazineService.getPriceActualFor(id,stage);
         //Then
+        assertEquals(30, price, 0);
     }
 
     @Test
-    public void getTimeStartFor() throws Exception {
+    public void testGetTimeStartFor() {
         //Given
+        Magazine magazine = new Magazine(3L, "Tytuł testowy", "0000-1234", 1999, 10, 2500L, 100L, 5, 5, 5);
+        Stage stageExample = new Stage(3, "Description", 18.75);
+        Long id = magazine.getId();
+        int stage = stageExample.getStage();
+        when(stageService.getPriceStage(stageExample.getStage())).thenReturn(stageExample.getPrice());
+        when(magazineRepository.findById(magazine.getId())).thenReturn(Optional.of(magazine));
         //When
+        double time = magazineService.getTimeStartFor(id, stage);
         //Then
+        assertEquals(10, time, 0);
     }
 
     @Test
-    public void getTimeActualFor() throws Exception {
+    public void testGetTimeActualFor() {
         //Given
+        Magazine magazine = new Magazine(3L, "Tytuł testowy", "0000-1234", 1999, 10, 2500L, 100L, 5, 5, 5);
+        Stage stageExample = new Stage(3, "Description", 18.75);
+        Long id = magazine.getId();
+        int stage = stageExample.getStage();
+        when(stageService.getPriceStage(stageExample.getStage())).thenReturn(stageExample.getPrice());
+        when(magazineRepository.findById(magazine.getId())).thenReturn(Optional.of(magazine));
         //When
+        double time = magazineService.getTimeActualFor(id, stage);
         //Then
+        assertEquals(5, time, 0);
     }
 
     @Test
@@ -163,31 +187,93 @@ public class MagazineServiceTestSuite {
     }
 
     @Test
-    public void getPriceAllStagesStart() throws Exception {
+    public void testGetPriceAllStagesStart() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(3L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+        Stage stageExample1 = new Stage(1, "Description1", 0.6);
+        Stage stageExample2 = new Stage(2, "Description2", 0.5);
+        Stage stageExample3 = new Stage(3, "Description3", 18.75);
+        Stage stageExample4 = new Stage(4, "Description4", 6.25);
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
+        when(stageService.getPriceStage(stageExample1.getStage())).thenReturn(stageExample1.getPrice());
+        when(stageService.getPriceStage(stageExample2.getStage())).thenReturn(stageExample2.getPrice());
+        when(stageService.getPriceStage(stageExample3.getStage())).thenReturn(stageExample3.getPrice());
+        when(stageService.getPriceStage(stageExample4.getStage())).thenReturn(stageExample4.getPrice());
+
         //When
+        double price = magazineService.getPriceAllStagesStart();
         //Then
+        assertEquals(1756, price, 0.01);
     }
 
     @Test
-    public void getPriceAllStagesActual() throws Exception {
+    public void testGetPriceAllStagesActual() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(3L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+        Stage stageExample1 = new Stage(1, "Description1", 0.6);
+        Stage stageExample2 = new Stage(2, "Description2", 0.5);
+        Stage stageExample3 = new Stage(3, "Description3", 18.75);
+        Stage stageExample4 = new Stage(4, "Description4", 6.25);
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
+        when(stageService.getPriceStage(stageExample1.getStage())).thenReturn(stageExample1.getPrice());
+        when(stageService.getPriceStage(stageExample2.getStage())).thenReturn(stageExample2.getPrice());
+        when(stageService.getPriceStage(stageExample3.getStage())).thenReturn(stageExample3.getPrice());
+        when(stageService.getPriceStage(stageExample4.getStage())).thenReturn(stageExample4.getPrice());
+
         //When
+        double price = magazineService.getPriceAllStagesActual();
         //Then
+        assertEquals(1497.83, price, 0.01);
     }
 
     @Test
-    public void getTimeAllStart() throws Exception {
+    public void testGetTimeAllStart() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(3L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
+        double time = magazineService.getTimeAllStart();
         //Then
+        assertEquals(33.33, time, 0.01);
     }
 
     @Test
-    public void getTimeAllActual() throws Exception {
+    public void testGetTimeAllActual() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(3L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
+        double time = magazineService.getTimeAllActual();
         //Then
+        assertEquals(22, time, 0.01);
     }
 
 }
