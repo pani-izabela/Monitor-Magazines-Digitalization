@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -145,52 +144,124 @@ public class MagazineServiceTestSuite {
     }
 
     @Test
-    public void getQuantityAllVolumes() throws Exception {
+    public void testGetQuantityAllVolumes() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
+        int quantity = magazineService.getQuantityAllVolumes();
         //Then
+        assertEquals(25, quantity);
     }
 
     @Test
-    public void getQuantityAllVolumesToScanne() throws Exception {
+    public void testGetQuantityAllVolumesToScanne() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
+        int quantity = magazineService.getQuantityAllVolumesToScanne();
         //Then
+        assertEquals(15, quantity);
     }
 
     @Test
-    public void getQuantityAllReadyBigPdf() throws Exception {
+    public void testGetQuantityAllReadyBigPdf() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
+        int quantity = magazineService.getQuantityAllReadyBigPdf();
         //Then
+        assertEquals(9, quantity);
     }
 
     @Test
-    public void getQuantityAllBigPdfToDo() throws Exception {
+    public void testGetQuantityAllBigPdfToDo() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
+        int quantity = magazineService.getQuantityAllBigPdfToDo();
         //Then
+        assertEquals(16, quantity);
     }
 
     @Test
-    public void getQuantityAllReadySmallPdf() throws Exception {
+    public void testGetQuantityAllReadySmallPdf() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
+        int quantity = magazineService.getQuantityAllReadySmallPdf();
         //Then
+        assertEquals(7, quantity);
     }
 
     @Test
-    public void getQuantityAllSmallPdfToDo() throws Exception {
+    public void testGetQuantityAllSmallPdfToDo() {
         //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
         //When
+        int quantity = magazineService.getQuantityAllSmallPdfToDo();
         //Then
+        assertEquals(18, quantity);
     }
 
     @Test
     public void testGetPriceAllStagesStart() {
         //Given
         Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(3L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
         Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
 
         ArrayList<Magazine> magazinesList = new ArrayList<>();
@@ -217,7 +288,7 @@ public class MagazineServiceTestSuite {
     public void testGetPriceAllStagesActual() {
         //Given
         Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(3L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
         Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
 
         ArrayList<Magazine> magazinesList = new ArrayList<>();
@@ -244,7 +315,7 @@ public class MagazineServiceTestSuite {
     public void testGetTimeAllStart() {
         //Given
         Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(3L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
         Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
 
         ArrayList<Magazine> magazinesList = new ArrayList<>();
@@ -262,7 +333,7 @@ public class MagazineServiceTestSuite {
     public void testGetTimeAllActual() {
         //Given
         Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(3L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
         Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
 
         ArrayList<Magazine> magazinesList = new ArrayList<>();
