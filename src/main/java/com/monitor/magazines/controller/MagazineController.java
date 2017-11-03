@@ -56,11 +56,11 @@ public class MagazineController {
     @RequestMapping(method = RequestMethod.GET, value = "getPriceStartFor")
     public Double getPriceStartFor(@RequestParam Long magazineId, int stage){
         double price = magazineService.getPriceStartFor(magazineId, stage);
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        /*DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
         decimalFormatSymbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
         String doublePrice = decimalFormat.format(price);
-        price = Double.valueOf(doublePrice);
+        price = Double.valueOf(doublePrice);*/
         return price;
     }
 

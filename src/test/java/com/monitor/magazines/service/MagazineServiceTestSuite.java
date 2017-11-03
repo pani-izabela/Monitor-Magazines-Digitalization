@@ -86,16 +86,17 @@ public class MagazineServiceTestSuite {
     @Test
     public void testGetPriceStartFor() {
         //Given
-        Magazine magazine = new Magazine(1L, "Tytuł testowy", "0000-1234", 1999, 5, 1000L, 100L, 2, 0, 0);
-        Stage stageExample = new Stage(2, "Description", 0.5);
+        Magazine magazine = new Magazine(3L, "Tytuł testowy", "0000-1234", 1999, 10, 2500L, 100L, 5, 5, 5);
+        Stage stageExample = new Stage(1, "Description", 0.6);
         Long id = magazine.getId();
         int stage = stageExample.getStage();
-        double priceStage = stageExample.getPrice()*(magazine.getPagesToScann()/2);
+        double priceStage = stageExample.getPrice()*(magazine.getArticles());
         when(stageService.getPriceStage(stageExample.getStage())).thenReturn(priceStage);
+        when(magazineRepository.findById(magazine.getId())).thenReturn(Optional.of(magazine));
         //When
         double price = magazineService.getPriceStartFor(id, stage);
         //Then
-        assertEquals(250.00, price, 0.01);
+        assertEquals(60, price, 0);
     }
 
     @Test

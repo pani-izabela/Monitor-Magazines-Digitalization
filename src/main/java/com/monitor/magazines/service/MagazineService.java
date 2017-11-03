@@ -74,7 +74,6 @@ public class MagazineService {
 
         return price;
     }
-    //Czy ja powinnam robić warunek z else ostatni gdyby ktoś podał zły etap?
 
    //------------------------------------------------------------------
 
