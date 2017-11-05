@@ -10,16 +10,23 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @RunWith(MockitoJUnitRunner.class)
 @WebMvcTest(MagazineController.class)
-public class MagazineControllerTest {
+public class MagazineControllerTestSuite {
     @Autowired
     private MockMvc mockMvc;
 
@@ -34,8 +41,13 @@ public class MagazineControllerTest {
     public void testGetMagazines() throws Exception {
         //Given
         List<Magazine> magazineList = new ArrayList<Magazine>();
-
+        magazineList.add(new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2));
+        when(magazineService.getMagazines()).thenReturn(magazineList);
         // When & Then
+        mockMvc.perform(get("monitor/digitalization/magazines/getMagazines").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].title", is("Tytul testowy1")));
     }
 
     @Test

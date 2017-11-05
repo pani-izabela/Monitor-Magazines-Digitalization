@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FileGeneatorServiceTest {
+public class FileGeneatorServiceTestSuite {
     @InjectMocks
     private FileGeneatorService fileGeneatorService;
 
