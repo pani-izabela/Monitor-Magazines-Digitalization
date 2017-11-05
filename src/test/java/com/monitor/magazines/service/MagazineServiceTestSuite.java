@@ -120,7 +120,6 @@ public class MagazineServiceTestSuite {
         Stage stageExample = new Stage(3, "Description", 18.75);
         Long id = magazine.getId();
         int stage = stageExample.getStage();
-        when(stageService.getPriceStage(stageExample.getStage())).thenReturn(stageExample.getPrice());
         when(magazineRepository.findById(magazine.getId())).thenReturn(Optional.of(magazine));
         //When
         double time = magazineService.getTimeStartFor(id, stage);
@@ -135,7 +134,6 @@ public class MagazineServiceTestSuite {
         Stage stageExample = new Stage(3, "Description", 18.75);
         Long id = magazine.getId();
         int stage = stageExample.getStage();
-        when(stageService.getPriceStage(stageExample.getStage())).thenReturn(stageExample.getPrice());
         when(magazineRepository.findById(magazine.getId())).thenReturn(Optional.of(magazine));
         //When
         double time = magazineService.getTimeActualFor(id, stage);

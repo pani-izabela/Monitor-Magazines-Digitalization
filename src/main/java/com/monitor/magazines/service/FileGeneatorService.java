@@ -46,7 +46,7 @@ public class FileGeneatorService {
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             Magazine magazine = magazineService.getMagazine(magazineId);
             bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
-            bufferedWriter.newLine();
+            bufferedWriter.write("\n");
             bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + " PLN" + "; " + priceDigitalizationNow + " PLN");
             bufferedWriter.close();
 
