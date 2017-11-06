@@ -76,7 +76,8 @@ public class MagazineControllerTestSuite {
     }
 
     @Test
-    public void deleteMagazine() throws Exception {
+    public void testDeleteMagazine() throws Exception {
+        Magazine magazine = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
     }
 
     @Test
@@ -97,12 +98,14 @@ public class MagazineControllerTestSuite {
         Magazine magazine = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
         Stage stage = new Stage(1, "Description", 0.6);
         when(magazineService.getPriceStartFor(magazine.getId(), stage.getStage())).thenReturn(36.0);
+        //Czy to jest dobrze, że ja wrzucam tu 30.0, a nie 36, wszak tyle pokazuje postman
 
         mockMvc.perform(get("/monitor/digitalization/magazines/getPriceStartFor")
                 .param("magazineId", "1")
                 .param("stage", "1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(36.0)));
     }
 
     @Test
@@ -115,7 +118,8 @@ public class MagazineControllerTestSuite {
                 .param("magazineId", "1")
                 .param("stage", "3")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(18.75)));
     }
 
     @Test
@@ -128,7 +132,8 @@ public class MagazineControllerTestSuite {
                 .param("magazineId", "1")
                 .param("stage", "3")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(3.0)));
     }
 
     @Test
@@ -141,7 +146,8 @@ public class MagazineControllerTestSuite {
                 .param("magazineId", "1")
                 .param("stage", "4")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(0.33)));
     }
 
     @Test
@@ -154,7 +160,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllVolumes")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(25)));
     }
 
     @Test
@@ -167,7 +174,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllVolumesToScanne")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(15)));
     }
 
     @Test
@@ -180,7 +188,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllReadyBigPdf")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(9)));
     }
 
     @Test
@@ -193,7 +202,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllBigPdfToDo")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(16)));
     }
 
     @Test
@@ -206,7 +216,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllReadySmallPdf")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(7)));
     }
 
     @Test
@@ -219,7 +230,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllSmallPdfToDo")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(18)));
     }
 
     @Test
@@ -232,7 +244,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getPriceAllStagesStart")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(1756.0)));
     }
 
     @Test
@@ -245,7 +258,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getPriceAllStagesActual")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(1497.83)));
     }
 
     @Test
@@ -258,7 +272,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getTimeAllStart")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(33.33)));
     }
 
     @Test
@@ -271,7 +286,8 @@ public class MagazineControllerTestSuite {
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getTimeAllActual")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(22.0)));
     }
 
     @Test
