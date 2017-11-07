@@ -170,18 +170,22 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
     public void saveDataForSingelMagazine(@RequestParam Long magazineId, HttpServletResponse response){
-        //response.setCharacterEncoding("utf-8");
         response.addHeader("content-type", "application/csv");
         response.addHeader("content-disposition", "attachment;filename=report.csv");
-
         csvGeneatorService.saveDataForSingelMagazine(magazineId, response);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "saveDataForAllMagazine")
+    public void saveDataForAllMagazine(@RequestParam HttpServletResponse response){
+        response.addHeader("content-type", "application/csv");
+        response.addHeader("content-disposition", "attachment;filename=bigReport.csv");
+        csvGeneatorService.saveDataForAllMagazine(response);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazineToPdf")
     public void saveDataForSingelMagazineToPdf(@RequestParam Long magazineId, HttpServletResponse response) throws IOException {
         response.addHeader("content-type", "application/pdf");
         response.addHeader("content-disposition", "attachment;filename=report.pdf");
-        //response.flushBuffer();
         csvGeneatorService.saveDataForSingelMagazineToPdf(magazineId, response);
     }
 
