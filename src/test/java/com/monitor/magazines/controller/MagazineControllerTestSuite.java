@@ -16,11 +16,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -78,8 +82,8 @@ public class MagazineControllerTestSuite {
     public void testDeleteMagazine() throws Exception {
         //Given
         Magazine magazine = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        doNothing().when(magazineService).deleteMagazine(magazine.getId());
         // When & Then
-        magazineService.deleteMagazine(magazine.getId());
         mockMvc.perform(delete("/monitor/digitalization/magazines/deleteMagazine")
                 .param("magazineId", "1")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -103,7 +107,6 @@ public class MagazineControllerTestSuite {
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk());
-                //.andExpect(jsonPath("$.id", is("1L")));
     }
 
     @Test
@@ -123,17 +126,6 @@ public class MagazineControllerTestSuite {
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk());
-                /*.andExpect(jsonPath("$.id", is("1L")))
-                .andExpect(jsonPath("$.title", is("Tytul testowy1")))
-                .andExpect(jsonPath("$.issn", is("4444-7890")))
-                .andExpect(jsonPath("$.firstScannedYear", is("2009")))
-                .andExpect(jsonPath("$.volumesToScann", is("3")))
-                .andExpect(jsonPath("$.pagesToScann", is("300L")))
-                .andExpect(jsonPath("$.articles", is("60L")))
-                .andExpect(jsonPath("$.articles", is("60L")))
-                .andExpect(jsonPath("$.scannedVolumes", is("3")))
-                .andExpect(jsonPath("$.volumesBigPdf", is("2")))
-                .andExpect(jsonPath("$.volumesSmallPdf", is("2")));*/
     }
 
     @Test
@@ -176,7 +168,7 @@ public class MagazineControllerTestSuite {
                 .param("stage", "3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(3.0)));
+                .andExpect(jsonPath("$", is("3(h) 0(m)")));
     }
 
     @Test
@@ -190,15 +182,12 @@ public class MagazineControllerTestSuite {
                 .param("stage", "4")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(0.33)));
+                .andExpect(jsonPath("$", is("0(h) 19(m)")));
     }
 
     @Test
     public void testGetQuantityAllVolumes() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
         when(magazineService.getQuantityAllVolumes()).thenReturn(25);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllVolumes")
@@ -210,10 +199,7 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetQuantityAllScannedVolumes() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
-        when(magazineService.getQuantityAllScanedVolumes()).thenReturn(10);
+       when(magazineService.getQuantityAllScanedVolumes()).thenReturn(10);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllScanedVolumes")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -224,9 +210,6 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetQuantityAllVolumesToScanne() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
         when(magazineService.getQuantityAllVolumesToScanne()).thenReturn(15);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllVolumesToScanne")
@@ -238,10 +221,7 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetQuantityAllReadyBigPdf() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
-        when(magazineService.getQuantityAllReadyBigPdf()).thenReturn(9);
+       when(magazineService.getQuantityAllReadyBigPdf()).thenReturn(9);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllReadyBigPdf")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -252,9 +232,6 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetQuantityAllBigPdfToDo() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
         when(magazineService.getQuantityAllBigPdfToDo()).thenReturn(16);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllBigPdfToDo")
@@ -266,9 +243,6 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetQuantityAllReadySmallPdf() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
         when(magazineService.getQuantityAllReadySmallPdf()).thenReturn(7);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllReadySmallPdf")
@@ -280,9 +254,6 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetQuantityAllSmallPdfToDo() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
         when(magazineService.getQuantityAllSmallPdfToDo()).thenReturn(18);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllSmallPdfToDo")
@@ -294,10 +265,7 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetPriceAllStagesStart() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
-        when(magazineService.getPriceAllStagesStart()).thenReturn(1756.0);
+       when(magazineService.getPriceAllStagesStart()).thenReturn(1756.0);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getPriceAllStagesStart")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -308,9 +276,6 @@ public class MagazineControllerTestSuite {
     @Test
     public void getPriceAllStagesActual() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
         when(magazineService.getPriceAllStagesActual()).thenReturn(1497.83);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getPriceAllStagesActual")
@@ -322,41 +287,45 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetTimeAllStart() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
         when(magazineService.getTimeAllStart()).thenReturn(33.33);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getTimeAllStart")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(33.33)));
+                .andExpect(jsonPath("$", is("33(h) 19(m)")));
     }
 
     @Test
     public void testGetTimeAllActual() throws Exception {
         //Given
-        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
-        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
         when(magazineService.getTimeAllActual()).thenReturn(22.0);
         //When&Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getTimeAllActual")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(22.0)));
+                .andExpect(jsonPath("$", is("22(h) 0(m)")));
     }
 
     @Test
-    public void testSsaveDataForSingelMagazine() throws Exception {
-        /*Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        when(fileGeneatorService.saveDataForSingelMagazine(magazine1.getId())).thenReturn();*/
+    public void testSaveDataForSingelMagazine() throws Exception {
+        doNothing().when(fileGeneatorService).saveDataForSingelMagazine(anyLong(), any(HttpServletResponse.class));
+
+        //When&Then
+        mockMvc.perform(get("/monitor/digitalization/magazines/saveDataForSingelMagazine")
+                .param("magazineId", "5")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void testSaveDataForSingelMagazineToPdf() throws Exception {
-        /*Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
-        when(fileGeneatorService.saveDataForSingelMagazine()).thenReturn();*/
+        doNothing().when(fileGeneatorService).saveDataForSingelMagazineToPdf(anyLong(), any(HttpServletResponse.class));
+
+        //When&Then
+        mockMvc.perform(get("/monitor/digitalization/magazines/saveDataForSingelMagazineToPdf")
+                .param("magazineId", "1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
 }

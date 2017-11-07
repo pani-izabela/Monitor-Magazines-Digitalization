@@ -64,29 +64,38 @@ public class FileGeneatorService {
     public void saveDataForAllMagazine(HttpServletResponse response){
         String csvFile = "bigReport.csv";
 
-        magazineService.getMagazines();
+        List<Magazine> magazines = magazineService.getMagazines();
 
         double priceDigitalizationAllOnStart = (magazineService.getPriceAllStagesStart());
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
         decimalFormatSymbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
         String doublePrice = decimalFormat.format(priceDigitalizationAllOnStart);
-        priceDigitalizationAllOnStart = Double.valueOf(doublePrice);
+        final double priceForAllOnStart = Double.valueOf(doublePrice);
 
         double priceDigitalizationAllNow = (magazineService.getPriceAllStagesActual());
         DecimalFormatSymbols decimalFormatSymbols1 = new DecimalFormatSymbols(Locale.getDefault());
         decimalFormatSymbols1.setDecimalSeparator('.');
         DecimalFormat decimalFormat1 = new DecimalFormat("0.00", decimalFormatSymbols);
         String doublePrice1 = decimalFormat1.format(priceDigitalizationAllNow);
-        priceDigitalizationAllNow = Double.valueOf(doublePrice1);
+        final double priceForAllNow = Double.valueOf(doublePrice1);
 
         try{
             FileWriter writer = new FileWriter(csvFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            ArrayList<Magazine> magazinesList = new ArrayList<>();
+            //ArrayList<Magazine> magazinesList = new ArrayList<>();
             bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
             bufferedWriter.write("\n");
-            bufferedWriter.write(magazinesList.indexOf(0) + "; " + magazinesList.indexOf(0) + priceDigitalizationAllOnStart + "; " + priceDigitalizationAllNow);
+
+            magazines.forEach(magazine -> {
+                try {
+                    bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + priceForAllOnStart + "; " + priceForAllNow);
+                } catch (IOException e) {
+                    System.out.println("I can't save magazine." + magazine.getId());
+                }
+            });
+
+            //bufferedWriter.write(magazinesList.indexOf(0) + "; " + magazinesList.indexOf(0) + priceDigitalizationAllOnStart + "; " + priceDigitalizationAllNow);
             bufferedWriter.close();
 
             File file = new File(csvFile);
