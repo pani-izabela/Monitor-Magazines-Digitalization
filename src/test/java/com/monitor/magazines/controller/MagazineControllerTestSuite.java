@@ -1,5 +1,6 @@
 package com.monitor.magazines.controller;
 
+import com.google.gson.Gson;
 import com.monitor.magazines.domain.Magazine;
 import com.monitor.magazines.domain.MagazineDto;
 import com.monitor.magazines.domain.Stage;
@@ -21,7 +22,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -75,20 +76,64 @@ public class MagazineControllerTestSuite {
 
     @Test
     public void testDeleteMagazine() throws Exception {
+        //Given
         Magazine magazine = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        // When & Then
+        magazineService.deleteMagazine(magazine.getId());
+        mockMvc.perform(delete("/monitor/digitalization/magazines/deleteMagazine")
+                .param("magazineId", "1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void updateMagazine() throws Exception {
-    }
-
-    @Test
-    public void testCreateMagazine() throws Exception {
+        //Given
         Magazine magazine = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
         MagazineDto magazineDto = new MagazineDto(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
 
         when(magazineService.saveMagazine(magazine)).thenReturn(magazine);
         when(magazineMapper.mapToMagazine(magazineDto)).thenReturn(magazine);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(magazineDto);
+        //When & Then
+        mockMvc.perform(put("/monitor/digitalization/magazines/updateMagazine")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk());
+                //.andExpect(jsonPath("$.id", is("1L")));
+    }
+
+    @Test
+    public void testCreateMagazine() throws Exception {
+        //Given
+        Magazine magazine = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        MagazineDto magazineDto = new MagazineDto(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+
+        when(magazineService.saveMagazine(magazine)).thenReturn(magazine);
+        when(magazineMapper.mapToMagazine(magazineDto)).thenReturn(magazine);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(magazineDto);
+        //When & Then
+        mockMvc.perform(post("/monitor/digitalization/magazines/createMagazine")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk());
+                /*.andExpect(jsonPath("$.id", is("1L")))
+                .andExpect(jsonPath("$.title", is("Tytul testowy1")))
+                .andExpect(jsonPath("$.issn", is("4444-7890")))
+                .andExpect(jsonPath("$.firstScannedYear", is("2009")))
+                .andExpect(jsonPath("$.volumesToScann", is("3")))
+                .andExpect(jsonPath("$.pagesToScann", is("300L")))
+                .andExpect(jsonPath("$.articles", is("60L")))
+                .andExpect(jsonPath("$.articles", is("60L")))
+                .andExpect(jsonPath("$.scannedVolumes", is("3")))
+                .andExpect(jsonPath("$.volumesBigPdf", is("2")))
+                .andExpect(jsonPath("$.volumesSmallPdf", is("2")));*/
     }
 
     @Test

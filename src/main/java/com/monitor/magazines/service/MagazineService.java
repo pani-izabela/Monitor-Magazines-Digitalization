@@ -108,7 +108,6 @@ public class MagazineService {
         return (magazines.stream().mapToInt(Magazine::getVolumesToScann).sum());
     }
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!
     public Integer getQuantityAllScanedVolumes(){
         List<Magazine> magazines = getMagazines();
         return (magazines.stream().mapToInt(Magazine::getScannedVolumes).sum());
