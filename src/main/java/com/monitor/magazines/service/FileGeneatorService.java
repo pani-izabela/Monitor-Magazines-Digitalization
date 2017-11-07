@@ -21,6 +21,14 @@ public class FileGeneatorService {
     @Autowired
     private MagazineService magazineService;
 
+    public static Double makeTwoDecimalPlaces(double number){
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        decimalFormatSymbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
+        String doubleNumber = decimalFormat.format(number);
+        return number = Double.valueOf(doubleNumber);
+    }
+
 
     public void saveDataForSingelMagazine(Long magazineId, HttpServletResponse response){
         String csvFile = "report.csv";
@@ -28,21 +36,13 @@ public class FileGeneatorService {
                 + (magazineService.getPriceStartFor(magazineId, 2))
                 + (magazineService.getPriceStartFor(magazineId, 3))
                 + (magazineService.getPriceStartFor(magazineId, 4));
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice = decimalFormat.format(priceDigitalizationOnStart);
-        priceDigitalizationOnStart = Double.valueOf(doublePrice);
+        double startPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationOnStart);
 
         double priceDigitalizationNow = (magazineService.getPriceActualFor(magazineId, 1))
                 + (magazineService.getPriceActualFor(magazineId, 2))
                 + (magazineService.getPriceActualFor(magazineId, 3))
                 + (magazineService.getPriceActualFor(magazineId, 4));
-        DecimalFormatSymbols decimalFormatSymbols1 = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols1.setDecimalSeparator('.');
-        DecimalFormat decimalFormat1 = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice1 = decimalFormat1.format(priceDigitalizationNow);
-        priceDigitalizationNow = Double.valueOf(doublePrice1);
+        double actualPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationNow);
 
         try{
             FileWriter writer = new FileWriter(csvFile);
@@ -50,7 +50,7 @@ public class FileGeneatorService {
             Magazine magazine = magazineService.getMagazine(magazineId);
             bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
             bufferedWriter.write("\n");
-            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + priceDigitalizationOnStart + " PLN" + "; " + priceDigitalizationNow + " PLN");
+            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + startPriceMagazine + " PLN" + "; " + actualPriceMagazine + " PLN");
             bufferedWriter.close();
 
             File file = new File(csvFile);
@@ -69,18 +69,10 @@ public class FileGeneatorService {
         List<Magazine> magazines = magazineService.getMagazines();
 
         double priceDigitalizationAllOnStart = (magazineService.getPriceAllStagesStart());
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice = decimalFormat.format(priceDigitalizationAllOnStart);
-        final double priceForAllOnStart = Double.valueOf(doublePrice);
+        double priceForAllOnStart = makeTwoDecimalPlaces(priceDigitalizationAllOnStart);
 
         double priceDigitalizationAllNow = (magazineService.getPriceAllStagesActual());
-        DecimalFormatSymbols decimalFormatSymbols1 = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols1.setDecimalSeparator('.');
-        DecimalFormat decimalFormat1 = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice1 = decimalFormat1.format(priceDigitalizationAllNow);
-        final double priceForAllNow = Double.valueOf(doublePrice1);
+        double priceForAllNow = makeTwoDecimalPlaces(priceDigitalizationAllNow);
 
 
         try{
@@ -92,7 +84,7 @@ public class FileGeneatorService {
 
             magazines.forEach(magazine -> {
                 try {
-                    bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazineService.getPriceStartFor(magazine.getId(), 0) + "; " + magazineService.getPriceActualFor(magazine.getId(), 0) + "\n");
+                    bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + makeTwoDecimalPlaces(magazineService.getPriceStartFor(magazine.getId(), 0)) + "; " + makeTwoDecimalPlaces(magazineService.getPriceActualFor(magazine.getId(), 0)) + "\n");
                 } catch (IOException e) {
                     System.out.println("I can't save magazine. " + magazine.getId());
                 }
@@ -116,21 +108,13 @@ public class FileGeneatorService {
                 + (magazineService.getPriceStartFor(magazineId, 2))
                 + (magazineService.getPriceStartFor(magazineId, 3))
                 + (magazineService.getPriceStartFor(magazineId, 4));
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice = decimalFormat.format(priceDigitalizationOnStart);
-        priceDigitalizationOnStart = Double.valueOf(doublePrice);
+        double startPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationOnStart);
 
         double priceDigitalizationNow = (magazineService.getPriceActualFor(magazineId, 1))
                 + (magazineService.getPriceActualFor(magazineId, 2))
                 + (magazineService.getPriceActualFor(magazineId, 3))
                 + (magazineService.getPriceActualFor(magazineId, 4));
-        DecimalFormatSymbols decimalFormatSymbols1 = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols1.setDecimalSeparator('.');
-        DecimalFormat decimalFormat1 = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice1 = decimalFormat1.format(priceDigitalizationNow);
-        priceDigitalizationNow = Double.valueOf(doublePrice1);
+        double actualPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationNow);
 
 
         try {
@@ -150,15 +134,16 @@ public class FileGeneatorService {
             document.add(new Paragraph("\n", fontSpace));
             document.add(new Paragraph("First digitalized year's issue: " + magazine.getFirstScannedYear(), fontBody));
             document.add(new Paragraph("\n", fontSpace));
-            document.add(new Paragraph("Price of digitalization on start: " + priceDigitalizationOnStart + " PLN", fontBody));
+            document.add(new Paragraph("Price of digitalization on start: " + startPriceMagazine + " PLN", fontBody));
             document.add(new Paragraph("\n", fontSpace));
-            document.add(new Paragraph("Price of digitalization at the indicated time: " + priceDigitalizationNow + " PLN", fontBody));
+            document.add(new Paragraph("Price of digitalization at the indicated time: " + actualPriceMagazine + " PLN", fontBody));
             document.close();
 
             File file = new File(pdfFile);
             FileInputStream fileInputStream = new FileInputStream(file);
             IOUtils.copy(fileInputStream, response.getOutputStream());
             fileInputStream.close();
+
         } catch (IOException e) {
             System.out.println("I can't create pdf.");
         } catch (DocumentException e) {
