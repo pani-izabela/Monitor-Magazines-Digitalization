@@ -83,6 +83,8 @@ public class MagazineServiceTestSuite {
 
     }
 
+    //---------------------------------------------------------------------
+
     @Test
     public void testGetPriceStartFor() {
         //Given
@@ -113,6 +115,7 @@ public class MagazineServiceTestSuite {
         assertEquals(30, price, 0);
     }
 
+    //---------------------------------------------------------------------
     @Test
     public void testGetTimeStartFor() {
         //Given
@@ -141,6 +144,7 @@ public class MagazineServiceTestSuite {
         assertEquals(5, time, 0);
     }
 
+    //---------------------------------------------------------------------
     @Test
     public void testGetQuantityAllVolumes() {
         //Given
@@ -158,6 +162,25 @@ public class MagazineServiceTestSuite {
         int quantity = magazineService.getQuantityAllVolumes();
         //Then
         assertEquals(25, quantity);
+    }
+
+    @Test
+    public void testGetQuantityAllScanedVolumes() {
+        //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+
+        ArrayList<Magazine> magazinesList = new ArrayList<>();
+        magazinesList.add(magazine1);
+        magazinesList.add(magazine2);
+        magazinesList.add(magazine3);
+
+        when(magazineRepository.findAll()).thenReturn(magazinesList);
+        //When
+        int quantity = magazineService.getQuantityAllScanedVolumes();
+        //Then
+        assertEquals(10, quantity);
     }
 
     @Test

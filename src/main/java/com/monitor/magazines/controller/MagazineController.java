@@ -103,6 +103,11 @@ public class MagazineController {
         return magazineService.getQuantityAllVolumes();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllScanedVolumes")
+    public Integer getQuantityAllScanedVolumes(){
+        return magazineService.getQuantityAllScanedVolumes();
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllVolumesToScanne")
     public Integer getQuantityAllVolumesToScanne(){
         return magazineService.getQuantityAllVolumesToScanne();

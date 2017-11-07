@@ -149,7 +149,7 @@ public class MagazineControllerTestSuite {
     }
 
     @Test
-    public void testGetQuantityAllScannedVolumes() throws Exception {
+    public void testGetQuantityAllVolumes() throws Exception {
         //Given
         Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
         Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
@@ -160,6 +160,20 @@ public class MagazineControllerTestSuite {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(25)));
+    }
+
+    @Test
+    public void testGetQuantityAllScannedVolumes() throws Exception {
+        //Given
+        Magazine magazine1 = new Magazine(1L, "Tytuł testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
+        Magazine magazine2 = new Magazine(2L, "Tytuł testowy2", "6543-9999", 2003, 12, 500L, 350L, 2, 2, 0);
+        Magazine magazine3 = new Magazine(3L, "Tytuł testowy3", "j789-000", 2007, 10, 2500L, 100L, 5, 5, 5);
+        when(magazineService.getQuantityAllScanedVolumes()).thenReturn(10);
+        //When&Then
+        mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllScanedVolumes")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(10)));
     }
 
     @Test
