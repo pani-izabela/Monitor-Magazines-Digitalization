@@ -1,6 +1,7 @@
 package com.monitor.magazines.service;
 
 import com.monitor.magazines.domain.Magazine;
+import com.monitor.magazines.domain.Stage;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.Locale;
+import java.util.List;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -19,6 +20,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class FileGeneatorService {
     @Autowired
     private MagazineService magazineService;
+
 
     public void saveDataForSingelMagazine(Long magazineId, HttpServletResponse response){
         String csvFile = "report.csv";
@@ -80,22 +82,22 @@ public class FileGeneatorService {
         String doublePrice1 = decimalFormat1.format(priceDigitalizationAllNow);
         final double priceForAllNow = Double.valueOf(doublePrice1);
 
+
         try{
             FileWriter writer = new FileWriter(csvFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            //ArrayList<Magazine> magazinesList = new ArrayList<>();
-            bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
+            bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
             bufferedWriter.write("\n");
+
 
             magazines.forEach(magazine -> {
                 try {
-                    bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + priceForAllOnStart + "; " + priceForAllNow);
+                    bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazineService.getPriceStartFor(magazine.getId(), 0) + "; " + magazineService.getPriceActualFor(magazine.getId(), 0) + "\n");
                 } catch (IOException e) {
-                    System.out.println("I can't save magazine." + magazine.getId());
+                    System.out.println("I can't save magazine. " + magazine.getId());
                 }
             });
-
-            //bufferedWriter.write(magazinesList.indexOf(0) + "; " + magazinesList.indexOf(0) + priceDigitalizationAllOnStart + "; " + priceDigitalizationAllNow);
+            bufferedWriter.write("" + "; " + "Sum: " + "; " + priceForAllOnStart + "; " + priceForAllNow);
             bufferedWriter.close();
 
             File file = new File(csvFile);

@@ -53,6 +53,12 @@ public class MagazineService {
         else if(stage==4){
             price = magazine.getVolumesToScann() * stageService.getPriceStage(4);
         }
+        else if(stage==0){
+            price = magazine.getArticles() * stageService.getPriceStage(1)
+                    + (magazine.getPagesToScann()/2) * stageService.getPriceStage(2)
+                    + (magazine.getVolumesToScann()) * stageService.getPriceStage(3)
+                    + magazine.getVolumesToScann() * stageService.getPriceStage(4);
+        }
         return price;
     }
 
@@ -70,6 +76,12 @@ public class MagazineService {
         }
         else if(stage==4){
             price = (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * stageService.getPriceStage(4);
+        }
+        else if(stage==0){
+            price = (((double)magazine.getArticles() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf())) * stageService.getPriceStage(1)
+                    + (((double)magazine.getPagesToScann() / (double)magazine.getVolumesToScann()) * (magazine.getVolumesToScann() - magazine.getScannedVolumes()) * stageService.getPriceStage(2))
+                    + (magazine.getVolumesToScann() - magazine.getVolumesBigPdf()) * stageService.getPriceStage(3)
+                    + (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * stageService.getPriceStage(4);
         }
 
         return price;

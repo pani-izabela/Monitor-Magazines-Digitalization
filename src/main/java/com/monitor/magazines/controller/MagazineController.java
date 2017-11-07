@@ -25,7 +25,7 @@ public class MagazineController {
     @Autowired
     private MagazineMapper magazineMapper;
     @Autowired
-    private FileGeneatorService csvGeneatorService;
+    private FileGeneatorService fileGeneatorService;
 
     @RequestMapping(method = RequestMethod.GET, value = "getMagazines")
     public List<MagazineDto> getMagazines(){
@@ -177,21 +177,21 @@ public class MagazineController {
     public void saveDataForSingelMagazine(@RequestParam Long magazineId, HttpServletResponse response){
         response.addHeader("content-type", "application/csv");
         response.addHeader("content-disposition", "attachment;filename=report.csv");
-        csvGeneatorService.saveDataForSingelMagazine(magazineId, response);
+        fileGeneatorService.saveDataForSingelMagazine(magazineId, response);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "saveDataForAllMagazine")
-    public void saveDataForAllMagazine(@RequestParam HttpServletResponse response){
+    public void saveDataForAllMagazine(HttpServletResponse response){
         response.addHeader("content-type", "application/csv");
         response.addHeader("content-disposition", "attachment;filename=bigReport.csv");
-        csvGeneatorService.saveDataForAllMagazine(response);
+        fileGeneatorService.saveDataForAllMagazine(response);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazineToPdf")
     public void saveDataForSingelMagazineToPdf(@RequestParam Long magazineId, HttpServletResponse response) throws IOException {
         response.addHeader("content-type", "application/pdf");
         response.addHeader("content-disposition", "attachment;filename=report.pdf");
-        csvGeneatorService.saveDataForSingelMagazineToPdf(magazineId, response);
+        fileGeneatorService.saveDataForSingelMagazineToPdf(magazineId, response);
     }
 
 

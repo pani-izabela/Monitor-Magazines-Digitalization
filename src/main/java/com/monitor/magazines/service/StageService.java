@@ -13,12 +13,12 @@ public class StageService {
     @Autowired
     private StageRepozitory stageRepozitory;
 
-    /*//to chyba mi nie potrzebna metoda
-    public List<Stage> getStages(){
+
+    /*public List<Stage> getStages(){
         return stageRepozitory.findAll();
     }
 
-    //czy ta metoda w ogóle jest mi potrzebna skoro nie mam tego w kontrolerze
+    czy ta metoda w ogóle jest mi potrzebna skoro nie mam tego w kontrolerze
     public Stage saveStage(Stage stage){
         return stageRepozitory.save(stage);
     }*/
