@@ -65,24 +65,23 @@ public class FileGeneratorServiceTestSuite {
         Stage stageExample3 = new Stage(3, "Description3", 18.75);
         Stage stageExample4 = new Stage(4, "Description4", 6.25);
 
-        when(magazineService.getPriceStartFor(magazine1.getId(),stageExample1.getStage())).thenReturn(36.0);
-        when(magazineService.getPriceStartFor(magazine1.getId(),stageExample2.getStage())).thenReturn(75.0);
-        when(magazineService.getPriceStartFor(magazine1.getId(),stageExample3.getStage())).thenReturn(56.25);
-        when(magazineService.getPriceStartFor(magazine1.getId(),stageExample4.getStage())).thenReturn(18.75);
+        when(magazineService.getPriceStartFor(magazine1.getId(), stageExample1.getStage())).thenReturn(36.0);
+        when(magazineService.getPriceStartFor(magazine1.getId(), stageExample2.getStage())).thenReturn(75.0);
+        when(magazineService.getPriceStartFor(magazine1.getId(), stageExample3.getStage())).thenReturn(56.25);
+        when(magazineService.getPriceStartFor(magazine1.getId(), stageExample4.getStage())).thenReturn(18.75);
 
-        when(magazineService.getPriceActualFor(magazine1.getId(),stageExample1.getStage())).thenReturn(12.00);
-        when(magazineService.getPriceActualFor(magazine1.getId(),stageExample2.getStage())).thenReturn(0.0);
-        when(magazineService.getPriceActualFor(magazine1.getId(),stageExample3.getStage())).thenReturn(18.75);
-        when(magazineService.getPriceActualFor(magazine1.getId(),stageExample4.getStage())).thenReturn(6.25);
+        when(magazineService.getPriceActualFor(magazine1.getId(), stageExample1.getStage())).thenReturn(12.00);
+        when(magazineService.getPriceActualFor(magazine1.getId(), stageExample2.getStage())).thenReturn(0.0);
+        when(magazineService.getPriceActualFor(magazine1.getId(), stageExample3.getStage())).thenReturn(18.75);
+        when(magazineService.getPriceActualFor(magazine1.getId(), stageExample4.getStage())).thenReturn(6.25);
 
         MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
 
         //When
-        fileGeneratorService.getDataForSingelMagazine(magazine1.getId(), mockHttpServletResponse);
+        fileGeneratorService.getDataForSingelMagazineToPdf(magazine1.getId(), mockHttpServletResponse);
 
         //Then
-        String contentString = mockHttpServletResponse.getContentAsString();
-        assertEquals("Title; ISSN; First digitalized year's issue; Price of digitalization on start; Price of digitalization at the indicated time\nTytul testowy1; 4444-7890; 2009; 186.0 PLN; 37.0 PLN", contentString);
+        int status = mockHttpServletResponse.getStatus();
+        assertEquals(200, status);
     }
-
 }

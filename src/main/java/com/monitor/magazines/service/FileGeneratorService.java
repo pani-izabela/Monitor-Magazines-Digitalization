@@ -17,10 +17,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 @Service
 public class FileGeneratorService {
+
     @Autowired
     private MagazineService magazineService;
 
-    public static Double makeTwoDecimalPlaces(double number){
+    private static Double makeTwoDecimalPlaces(double number){
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
         decimalFormatSymbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
@@ -28,6 +29,12 @@ public class FileGeneratorService {
         return number = Double.valueOf(doubleNumber);
     }
 
+    private static void createFile(String nameFile, HttpServletResponse response) throws IOException {
+        File file = new File(nameFile);
+        FileInputStream fileInputStream = new FileInputStream(file);
+        IOUtils.copy(fileInputStream, response.getOutputStream());
+        fileInputStream.close();
+    }
 
     public void getDataForSingelMagazine(Long magazineId, HttpServletResponse response){
         String csvFile = "report.csv";
@@ -47,15 +54,12 @@ public class FileGeneratorService {
             FileWriter writer = new FileWriter(csvFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             Magazine magazine = magazineService.getMagazine(magazineId);
-            bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
+            bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start(PLN)" + "; " + "Price of digitalization at the indicated time(PLN)");
             bufferedWriter.write("\n");
-            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + startPriceMagazine + " PLN" + "; " + actualPriceMagazine + " PLN");
+            bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + startPriceMagazine + "; " + actualPriceMagazine);
             bufferedWriter.close();
 
-            File file = new File(csvFile);
-            FileInputStream fileInputStream = new FileInputStream(file);
-            IOUtils.copy(fileInputStream, response.getOutputStream());
-            fileInputStream.close();
+            createFile(csvFile, response);
         }
         catch(IOException e){
             System.out.println("I can't create file.");
@@ -73,13 +77,11 @@ public class FileGeneratorService {
         double priceDigitalizationAllNow = (magazineService.getPriceAllStagesActual());
         double priceForAllNow = makeTwoDecimalPlaces(priceDigitalizationAllNow);
 
-
         try{
             FileWriter writer = new FileWriter(csvFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
             bufferedWriter.write("\n");
-
 
             magazines.forEach(magazine -> {
                 try {
@@ -91,10 +93,7 @@ public class FileGeneratorService {
             bufferedWriter.write("" + "; " + "Sum: " + "; " + priceForAllOnStart + "; " + priceForAllNow);
             bufferedWriter.close();
 
-            File file = new File(csvFile);
-            FileInputStream fileInputStream = new FileInputStream(file);
-            IOUtils.copy(fileInputStream, response.getOutputStream());
-            fileInputStream.close();
+            createFile(csvFile, response);
         }
         catch(IOException e){
             System.out.println("I can't create file.");
@@ -114,7 +113,6 @@ public class FileGeneratorService {
                 + (magazineService.getPriceActualFor(magazineId, 3))
                 + (magazineService.getPriceActualFor(magazineId, 4));
         double actualPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationNow);
-
 
         try {
             Document document = new Document();
@@ -138,10 +136,7 @@ public class FileGeneratorService {
             document.add(new Paragraph("Price of digitalization at the indicated time: " + actualPriceMagazine + " PLN", fontBody));
             document.close();
 
-            File file = new File(pdfFile);
-            FileInputStream fileInputStream = new FileInputStream(file);
-            IOUtils.copy(fileInputStream, response.getOutputStream());
-            fileInputStream.close();
+            createFile(pdfFile, response);
 
         } catch (IOException e) {
             System.out.println("I can't create pdf.");
@@ -149,7 +144,6 @@ public class FileGeneratorService {
             e.printStackTrace();
         }
     }
-
-    }
+}
 
 

@@ -3,7 +3,7 @@ package com.monitor.magazines.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -18,7 +18,4 @@ public class MagazineDto {
     private Integer scannedVolumes;
     private Integer volumesBigPdf;
     private Integer volumesSmallPdf;
-    //private Double pagesPerVolumes;
-    //private Double articlesPerVolumes;
-
 }

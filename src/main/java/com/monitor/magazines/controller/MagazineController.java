@@ -22,8 +22,10 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class MagazineController {
     @Autowired
     private MagazineService magazineService;
+
     @Autowired
     private MagazineMapper magazineMapper;
+
     @Autowired
     private FileGeneratorService fileGeneratorService;
 
@@ -36,6 +38,7 @@ public class MagazineController {
     public MagazineDto getMagazine(@RequestParam Long magazineId) {
         return magazineMapper.mapToMagazineDto(magazineService.getMagazine(magazineId));
     }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteMagazine")
     public void deleteMagazine(@RequestParam Long magazineId){
         magazineService.deleteMagazine(magazineId);

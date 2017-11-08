@@ -18,5 +18,4 @@ public interface MagazineRepository extends CrudRepository<Magazine, Long>{
 
     @Override
     Optional<Magazine> findById(Long magazineId);
-
 }

@@ -1,15 +1,11 @@
 package com.monitor.magazines.service;
 
 import com.monitor.magazines.domain.Magazine;
-import com.monitor.magazines.domain.Stage;
 import com.monitor.magazines.repository.MagazineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.io.PrintStream;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MagazineService {
@@ -35,8 +31,6 @@ public class MagazineService {
     public Magazine getMagazine(final Long magazineId){
         return magazineRepository.findById(magazineId).get();
     }
-
-    //------------------------------------------------------------------
 
     public Double getPriceStartFor(Long magazineId, int stage){
         Magazine magazine = getMagazine(magazineId);
@@ -83,11 +77,8 @@ public class MagazineService {
                     + (magazine.getVolumesToScann() - magazine.getVolumesBigPdf()) * stageService.getPriceStage(3)
                     + (magazine.getVolumesToScann() - magazine.getVolumesSmallPdf()) * stageService.getPriceStage(4);
         }
-
         return price;
     }
-
-   //------------------------------------------------------------------
 
     public Double getTimeStartFor(Long magazineId, int stage){
         Magazine magazine = getMagazine(magazineId);
@@ -112,8 +103,6 @@ public class MagazineService {
         }
         return time;
     }
-
-    //---------------------------------------------------------------------
 
     public Integer getQuantityAllVolumes(){
         List<Magazine> magazines = getMagazines();
@@ -175,7 +164,6 @@ public class MagazineService {
                     + (magazine.getVolumesToScann()) * stageService.getPriceStage(4);
             sumPriceStart += volume;
         }
-
         return sumPriceStart;
     }
 
