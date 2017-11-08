@@ -189,7 +189,7 @@ public class MagazineControllerTestSuite {
         Magazine magazine = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
         Stage stage = new Stage(4, "Description", 6.25);
 
-        when(magazineService.getTimeActualFor(magazine.getId(), stage.getStage())).thenReturn(0.33);
+        when(magazineService.getTimeActualFor(magazine.getId(), stage.getStage())).thenReturn(0.34);
 
         //When & Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getTimeActualFor")
@@ -197,7 +197,7 @@ public class MagazineControllerTestSuite {
                 .param("stage", "4")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("0(h) 19(m)")));
+                .andExpect(jsonPath("$", is("0(h) 20(m)")));
     }
 
     @Test
@@ -311,13 +311,13 @@ public class MagazineControllerTestSuite {
     @Test
     public void testGetTimeAllStart() throws Exception {
         //Given
-        when(magazineService.getTimeAllStart()).thenReturn(33.33);
+        when(magazineService.getTimeAllStart()).thenReturn(33.34);
 
         //When & Then
         mockMvc.perform(get("/monitor/digitalization/magazines/getTimeAllStart")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("33(h) 19(m)")));
+                .andExpect(jsonPath("$", is("33(h) 20(m)")));
     }
 
     @Test

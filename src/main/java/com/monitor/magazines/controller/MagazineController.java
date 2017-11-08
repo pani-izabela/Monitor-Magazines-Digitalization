@@ -92,6 +92,7 @@ public class MagazineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeActualFor")
     public String getTimeActualFor(@RequestParam Long magazineId, int stage){
+        magazineService.getTimeActualFor(magazineId, stage);
         double time = magazineService.getTimeActualFor(magazineId, stage);
         int hours = (int)time;
         int minutes = (int)(time*60)%60;
