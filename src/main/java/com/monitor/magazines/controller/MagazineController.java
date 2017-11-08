@@ -54,53 +54,29 @@ public class MagazineController {
         magazineService.saveMagazine(magazineMapper.mapToMagazine(magazineDto));
     }
 
-    //--------------------------------------------------------------------------------------
-
     @RequestMapping(method = RequestMethod.GET, value = "getPriceStartFor")
     public Double getPriceStartFor(@RequestParam Long magazineId, int stage){
         double price = magazineService.getPriceStartFor(magazineId, stage);
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice = decimalFormat.format(price);
-        price = Double.valueOf(doublePrice);
-        return price;
+        return fileGeneratorService.makeTwoDecimalPlaces(price);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceActualFor")
     public Double getPriceActualFor(@RequestParam Long magazineId, int stage){
         double price = magazineService.getPriceActualFor(magazineId, stage);
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice = decimalFormat.format(price);
-        price = Double.valueOf(doublePrice);
-        return price;
-        //pytanie, czy nie lepiej aby metoda getPriceActualFor tutaj była String i wówczas użyć System.out.printf("%.2f%n", price);?
+        return fileGeneratorService.makeTwoDecimalPlaces(price);
     }
-
-    //--------------------------------------------------------------------------------------
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeStartFor")
     public String getTimeStartFor(@RequestParam Long magazineId, int stage){
         double time = magazineService.getTimeStartFor(magazineId, stage);
-        int hours = (int)time;
-        int minutes = (int)(time*60)%60;
-        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
-        return hoursPlusMinutes;
+        return convertDoubleToTime(time);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeActualFor")
     public String getTimeActualFor(@RequestParam Long magazineId, int stage){
-        magazineService.getTimeActualFor(magazineId, stage);
         double time = magazineService.getTimeActualFor(magazineId, stage);
-        int hours = (int)time;
-        int minutes = (int)(time*60)%60;
-        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
-        return hoursPlusMinutes;
+        return convertDoubleToTime(time);
     }
-
-    //--------------------------------------------------------------------------------------
 
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllVolumes")
     public Integer getQuantityAllScannedVolumes(){
@@ -140,41 +116,25 @@ public class MagazineController {
     @RequestMapping(method = RequestMethod.GET, value = "getPriceAllStagesStart")
     public Double getPriceAllStagesStart(){
         double price = magazineService.getPriceAllStagesStart();
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice = decimalFormat.format(price);
-        price = Double.valueOf(doublePrice);
-        return price;
+        return fileGeneratorService.makeTwoDecimalPlaces(price);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getPriceAllStagesActual")
     public Double getPriceAllStagesActual(){
         double price = magazineService.getPriceAllStagesActual();
-        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
-        decimalFormatSymbols.setDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);
-        String doublePrice = decimalFormat.format(price);
-        price = Double.valueOf(doublePrice);
-        return price;
+        return fileGeneratorService.makeTwoDecimalPlaces(price);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeAllStart")
     public String getTimeAllStart() {
         double time = magazineService.getTimeAllStart();
-        int hours = (int)time;
-        int minutes = (int)(time*60)%60;
-        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
-        return hoursPlusMinutes;
+        return convertDoubleToTime(time);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTimeAllActual")
     public String getTimeAllActual(){
         double time = magazineService.getTimeAllActual();
-        int hours = (int)time;
-        int minutes = (int)(time*60)%60;
-        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
-        return hoursPlusMinutes;
+        return convertDoubleToTime(time);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getDataForSingelMagazine")
@@ -198,5 +158,10 @@ public class MagazineController {
         fileGeneratorService.getDataForSingelMagazineToPdf(magazineId, response);
     }
 
-
+    private static String convertDoubleToTime(double time){
+        int hours = (int)time;
+        int minutes = (int)(time*60)%60;
+        String hoursPlusMinutes = String.format("%s(h) %s(m)", hours, minutes);
+        return hoursPlusMinutes;
+    }
 }

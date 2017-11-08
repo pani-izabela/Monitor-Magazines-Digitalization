@@ -21,7 +21,7 @@ public class FileGeneratorService {
     @Autowired
     private MagazineService magazineService;
 
-    private static Double makeTwoDecimalPlaces(double number){
+    public static Double makeTwoDecimalPlaces(double number){
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.getDefault());
         decimalFormatSymbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat("0.00", decimalFormatSymbols);

@@ -12,16 +12,12 @@ public class StageService {
     @Autowired
     private StageRepozitory stageRepozitory;
 
-    /*public List<Stage> getStages(){
-        return stageRepozitory.findAll();
-    }*/
-
     public Optional<Stage> getStage(Integer stage){
         return stageRepozitory.findById(stage);
     }
 
     public Double getPriceStage(Integer stage){
-        Stage stage1 = getStage(stage).get();
-        return stage1.getPrice();
+        Stage stageNumber = getStage(stage).get();
+        return stageNumber.getPrice();
     }
 }
