@@ -12,11 +12,11 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FileGeneratorServiceTestSuite {
+
     @InjectMocks
     private FileGeneratorService fileGeneratorService;
 
