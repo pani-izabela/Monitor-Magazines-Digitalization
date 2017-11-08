@@ -5,7 +5,7 @@ import com.monitor.magazines.domain.Magazine;
 import com.monitor.magazines.domain.MagazineDto;
 import com.monitor.magazines.domain.Stage;
 import com.monitor.magazines.mapper.MagazineMapper;
-import com.monitor.magazines.service.FileGeneatorService;
+import com.monitor.magazines.service.FileGeneratorService;
 import com.monitor.magazines.service.MagazineService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +41,7 @@ public class MagazineControllerTestSuite {
     @MockBean
     private MagazineMapper magazineMapper;
     @MockBean
-    private FileGeneatorService fileGeneatorService;
+    private FileGeneratorService fileGeneratorService;
 
     @Test
     public void testGetMagazines() throws Exception {
@@ -307,22 +307,22 @@ public class MagazineControllerTestSuite {
     }
 
     @Test
-    public void testSaveDataForSingelMagazine() throws Exception {
-        doNothing().when(fileGeneatorService).saveDataForSingelMagazine(anyLong(), any(HttpServletResponse.class));
+    public void testGetDataForSingelMagazine() throws Exception {
+        doNothing().when(fileGeneratorService).getDataForSingelMagazine(anyLong(), any(HttpServletResponse.class));
 
         //When&Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/saveDataForSingelMagazine")
+        mockMvc.perform(get("/monitor/digitalization/magazines/getDataForSingelMagazine")
                 .param("magazineId", "5")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testSaveDataForSingelMagazineToPdf() throws Exception {
-        doNothing().when(fileGeneatorService).saveDataForSingelMagazineToPdf(anyLong(), any(HttpServletResponse.class));
+    public void testGetDataForSingelMagazineToPdf() throws Exception {
+        doNothing().when(fileGeneratorService).getDataForSingelMagazineToPdf(anyLong(), any(HttpServletResponse.class));
 
         //When&Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/saveDataForSingelMagazineToPdf")
+        mockMvc.perform(get("/monitor/digitalization/magazines/getDataForSingelMagazineToPdf")
                 .param("magazineId", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

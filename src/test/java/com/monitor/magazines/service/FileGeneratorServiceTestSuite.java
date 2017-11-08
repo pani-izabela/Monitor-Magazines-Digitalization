@@ -9,26 +9,22 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FileGeneatorServiceTestSuite {
+public class FileGeneratorServiceTestSuite {
     @InjectMocks
-    private FileGeneatorService fileGeneatorService;
+    private FileGeneratorService fileGeneratorService;
 
     @Mock
     private MagazineService magazineService;
 
     @Test
-    public void testSaveDataForSingelMagazine() throws UnsupportedEncodingException {
+    public void testGetDataForSingelMagazine() throws UnsupportedEncodingException {
         //Given
         Magazine magazine1 = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
         when(magazineService.getMagazine(magazine1.getId())).thenReturn(magazine1);
@@ -51,7 +47,7 @@ public class FileGeneatorServiceTestSuite {
         MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
 
         //When
-        fileGeneatorService.saveDataForSingelMagazine(magazine1.getId(), mockHttpServletResponse);
+        fileGeneratorService.getDataForSingelMagazine(magazine1.getId(), mockHttpServletResponse);
 
         //Then
         String contentString = mockHttpServletResponse.getContentAsString();
@@ -59,7 +55,7 @@ public class FileGeneatorServiceTestSuite {
     }
 
     @Test
-    public void testSaveDataForSingelMagazineToPdf() throws UnsupportedEncodingException {
+    public void testGetDataForSingelMagazineToPdf() throws UnsupportedEncodingException {
         //Given
         Magazine magazine1 = new Magazine(1L, "Tytul testowy1", "4444-7890", 2009, 3, 300L, 60L, 3, 2, 2);
         when(magazineService.getMagazine(magazine1.getId())).thenReturn(magazine1);
@@ -82,7 +78,7 @@ public class FileGeneatorServiceTestSuite {
         MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
 
         //When
-        fileGeneatorService.saveDataForSingelMagazine(magazine1.getId(), mockHttpServletResponse);
+        fileGeneratorService.getDataForSingelMagazine(magazine1.getId(), mockHttpServletResponse);
 
         //Then
         String contentString = mockHttpServletResponse.getContentAsString();

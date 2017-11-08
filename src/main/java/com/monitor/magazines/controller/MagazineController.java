@@ -2,7 +2,7 @@ package com.monitor.magazines.controller;
 
 import com.monitor.magazines.domain.MagazineDto;
 import com.monitor.magazines.mapper.MagazineMapper;
-import com.monitor.magazines.service.FileGeneatorService;
+import com.monitor.magazines.service.FileGeneratorService;
 import com.monitor.magazines.service.MagazineService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class MagazineController {
     @Autowired
     private MagazineMapper magazineMapper;
     @Autowired
-    private FileGeneatorService fileGeneatorService;
+    private FileGeneratorService fileGeneratorService;
 
     @RequestMapping(method = RequestMethod.GET, value = "getMagazines")
     public List<MagazineDto> getMagazines(){
@@ -173,25 +173,25 @@ public class MagazineController {
         return hoursPlusMinutes;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazine")
-    public void saveDataForSingelMagazine(@RequestParam Long magazineId, HttpServletResponse response){
+    @RequestMapping(method = RequestMethod.GET, value = "getDataForSingelMagazine")
+    public void getDataForSingelMagazine(@RequestParam Long magazineId, HttpServletResponse response){
         response.addHeader("content-type", "application/csv");
         response.addHeader("content-disposition", "attachment;filename=report.csv");
-        fileGeneatorService.saveDataForSingelMagazine(magazineId, response);
+        fileGeneratorService.getDataForSingelMagazine(magazineId, response);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "saveDataForAllMagazine")
-    public void saveDataForAllMagazine(HttpServletResponse response){
+    @RequestMapping(method = RequestMethod.GET, value = "getDataForAllMagazine")
+    public void getDataForAllMagazine(HttpServletResponse response){
         response.addHeader("content-type", "application/csv");
         response.addHeader("content-disposition", "attachment;filename=bigReport.csv");
-        fileGeneatorService.saveDataForAllMagazine(response);
+        fileGeneratorService.getDataForAllMagazine(response);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "saveDataForSingelMagazineToPdf")
-    public void saveDataForSingelMagazineToPdf(@RequestParam Long magazineId, HttpServletResponse response) throws IOException {
+    @RequestMapping(method = RequestMethod.GET, value = "getDataForSingelMagazineToPdf")
+    public void getDataForSingelMagazineToPdf(@RequestParam Long magazineId, HttpServletResponse response) throws IOException {
         response.addHeader("content-type", "application/pdf");
         response.addHeader("content-disposition", "attachment;filename=report.pdf");
-        fileGeneatorService.saveDataForSingelMagazineToPdf(magazineId, response);
+        fileGeneratorService.getDataForSingelMagazineToPdf(magazineId, response);
     }
 
 

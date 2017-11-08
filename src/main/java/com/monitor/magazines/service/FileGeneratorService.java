@@ -1,7 +1,6 @@
 package com.monitor.magazines.service;
 
 import com.monitor.magazines.domain.Magazine;
-import com.monitor.magazines.domain.Stage;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
 @Service
-public class FileGeneatorService {
+public class FileGeneratorService {
     @Autowired
     private MagazineService magazineService;
 
@@ -30,7 +29,7 @@ public class FileGeneatorService {
     }
 
 
-    public void saveDataForSingelMagazine(Long magazineId, HttpServletResponse response){
+    public void getDataForSingelMagazine(Long magazineId, HttpServletResponse response){
         String csvFile = "report.csv";
         double priceDigitalizationOnStart = (magazineService.getPriceStartFor(magazineId, 1))
                 + (magazineService.getPriceStartFor(magazineId, 2))
@@ -63,7 +62,7 @@ public class FileGeneatorService {
         }
     }
 
-    public void saveDataForAllMagazine(HttpServletResponse response){
+    public void getDataForAllMagazine(HttpServletResponse response){
         String csvFile = "bigReport.csv";
 
         List<Magazine> magazines = magazineService.getMagazines();
@@ -102,7 +101,7 @@ public class FileGeneatorService {
         }
     }
 
-    public void saveDataForSingelMagazineToPdf(Long magazineId, HttpServletResponse response) {
+    public void getDataForSingelMagazineToPdf(Long magazineId, HttpServletResponse response) {
         String pdfFile = "report.pdf";
         double priceDigitalizationOnStart = (magazineService.getPriceStartFor(magazineId, 1))
                 + (magazineService.getPriceStartFor(magazineId, 2))
