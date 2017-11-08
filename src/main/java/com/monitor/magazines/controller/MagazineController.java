@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.List;
-import java.util.Locale;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 

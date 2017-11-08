@@ -51,7 +51,7 @@ public class FileGeneratorServiceTestSuite {
 
         //Then
         String contentString = mockHttpServletResponse.getContentAsString();
-        assertEquals("Title; ISSN; First digitalized year's issue; Price of digitalization on start; Price of digitalization at the indicated time\nTytul testowy1; 4444-7890; 2009; 186.0 PLN; 37.0 PLN", contentString);
+        assertEquals("Title; ISSN; First digitalized year's issue; Price of digitalization on start(PLN); Price of digitalization at the indicated time(PLN)\nTytul testowy1; 4444-7890; 2009; 186.0; 37.0", contentString);
     }
 
     @Test
