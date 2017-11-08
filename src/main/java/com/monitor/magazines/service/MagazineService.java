@@ -104,19 +104,19 @@ public class MagazineService {
         return time;
     }
 
-    public Integer getQuantityAllVolumes(){
+    public int getQuantityAllVolumes(){
         List<Magazine> magazines = getMagazines();
         return (magazines.stream().mapToInt(Magazine::getVolumesToScann).sum());
     }
 
-    public Integer getQuantityAllScanedVolumes(){
+    public int getQuantityAllScanedVolumes(){
         List<Magazine> magazines = getMagazines();
         return (magazines.stream().mapToInt(Magazine::getScannedVolumes).sum());
     }
 
-    public Integer getQuantityAllVolumesToScanne(){
+    public int getQuantityAllVolumesToScanne(){
         List<Magazine> magazines = getMagazines();
-        Integer sum = 0;
+        int sum = 0;
         for(Magazine magazine : magazines){
             int volume = magazine.getVolumesToScann() - magazine.getScannedVolumes();
             sum += volume;
@@ -124,14 +124,14 @@ public class MagazineService {
         return sum;
     }
 
-    public Integer getQuantityAllReadyBigPdf(){
+    public int getQuantityAllReadyBigPdf(){
         List<Magazine> magazines = getMagazines();
         return (magazines.stream().mapToInt(Magazine::getVolumesBigPdf).sum());
     }
 
-    public Integer getQuantityAllBigPdfToDo(){
+    public int getQuantityAllBigPdfToDo(){
         List<Magazine> magazines = getMagazines();
-        Integer sum = 0;
+        int sum = 0;
         for(Magazine magazine : magazines){
             int volume = magazine.getVolumesToScann() - magazine.getVolumesBigPdf();
             sum += volume;
@@ -139,14 +139,14 @@ public class MagazineService {
         return sum;
     }
 
-    public Integer getQuantityAllReadySmallPdf(){
+    public int getQuantityAllReadySmallPdf(){
         List<Magazine> magazines = getMagazines();
         return (magazines.stream().mapToInt(Magazine::getVolumesSmallPdf).sum());
     }
 
-    public Integer getQuantityAllSmallPdfToDo(){
+    public int getQuantityAllSmallPdfToDo(){
         List<Magazine> magazines = getMagazines();
-        Integer sum = 0;
+        int sum = 0;
         for(Magazine magazine : magazines){
             int volume = magazine.getVolumesToScann() - magazine.getVolumesSmallPdf();
             sum += volume;

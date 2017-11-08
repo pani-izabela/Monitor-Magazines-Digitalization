@@ -38,23 +38,23 @@ public class FileGeneratorService {
 
     public void getDataForSingelMagazine(Long magazineId, HttpServletResponse response){
         String csvFile = "report.csv";
-        double priceDigitalizationOnStart = (magazineService.getPriceStartFor(magazineId, 1))
+        double pricedigitizationOnStart = (magazineService.getPriceStartFor(magazineId, 1))
                 + (magazineService.getPriceStartFor(magazineId, 2))
                 + (magazineService.getPriceStartFor(magazineId, 3))
                 + (magazineService.getPriceStartFor(magazineId, 4));
-        double startPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationOnStart);
+        double startPriceMagazine = makeTwoDecimalPlaces(pricedigitizationOnStart);
 
-        double priceDigitalizationNow = (magazineService.getPriceActualFor(magazineId, 1))
+        double pricedigitizationNow = (magazineService.getPriceActualFor(magazineId, 1))
                 + (magazineService.getPriceActualFor(magazineId, 2))
                 + (magazineService.getPriceActualFor(magazineId, 3))
                 + (magazineService.getPriceActualFor(magazineId, 4));
-        double actualPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationNow);
+        double actualPriceMagazine = makeTwoDecimalPlaces(pricedigitizationNow);
 
         try{
             FileWriter writer = new FileWriter(csvFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             Magazine magazine = magazineService.getMagazine(magazineId);
-            bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitalization on start(PLN)" + "; " + "Price of digitalization at the indicated time(PLN)");
+            bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "First digitalized year's issue" + "; " + "Price of digitization on start(PLN)" + "; " + "Price of digitization at the indicated time(PLN)");
             bufferedWriter.write("\n");
             bufferedWriter.write(magazine.getTitle() + "; " + magazine.getIssn() + "; " + magazine.getFirstScannedYear() + "; " + startPriceMagazine + "; " + actualPriceMagazine);
             bufferedWriter.close();
@@ -71,16 +71,16 @@ public class FileGeneratorService {
 
         List<Magazine> magazines = magazineService.getMagazines();
 
-        double priceDigitalizationAllOnStart = (magazineService.getPriceAllStagesStart());
-        double priceForAllOnStart = makeTwoDecimalPlaces(priceDigitalizationAllOnStart);
+        double pricedigitizationAllOnStart = (magazineService.getPriceAllStagesStart());
+        double priceForAllOnStart = makeTwoDecimalPlaces(pricedigitizationAllOnStart);
 
-        double priceDigitalizationAllNow = (magazineService.getPriceAllStagesActual());
-        double priceForAllNow = makeTwoDecimalPlaces(priceDigitalizationAllNow);
+        double pricedigitizationAllNow = (magazineService.getPriceAllStagesActual());
+        double priceForAllNow = makeTwoDecimalPlaces(pricedigitizationAllNow);
 
         try{
             FileWriter writer = new FileWriter(csvFile);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "Price of digitalization on start" + "; " + "Price of digitalization at the indicated time");
+            bufferedWriter.write("Title" + "; " + "ISSN" + "; " + "Price of digitization on start" + "; " + "Price of digitization at the indicated time");
             bufferedWriter.write("\n");
 
             magazines.forEach(magazine -> {
@@ -102,17 +102,17 @@ public class FileGeneratorService {
 
     public void getDataForSingelMagazineToPdf(Long magazineId, HttpServletResponse response) {
         String pdfFile = "report.pdf";
-        double priceDigitalizationOnStart = (magazineService.getPriceStartFor(magazineId, 1))
+        double pricedigitizationOnStart = (magazineService.getPriceStartFor(magazineId, 1))
                 + (magazineService.getPriceStartFor(magazineId, 2))
                 + (magazineService.getPriceStartFor(magazineId, 3))
                 + (magazineService.getPriceStartFor(magazineId, 4));
-        double startPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationOnStart);
+        double startPriceMagazine = makeTwoDecimalPlaces(pricedigitizationOnStart);
 
-        double priceDigitalizationNow = (magazineService.getPriceActualFor(magazineId, 1))
+        double pricedigitizationNow = (magazineService.getPriceActualFor(magazineId, 1))
                 + (magazineService.getPriceActualFor(magazineId, 2))
                 + (magazineService.getPriceActualFor(magazineId, 3))
                 + (magazineService.getPriceActualFor(magazineId, 4));
-        double actualPriceMagazine = makeTwoDecimalPlaces(priceDigitalizationNow);
+        double actualPriceMagazine = makeTwoDecimalPlaces(pricedigitizationNow);
 
         try {
             Document document = new Document();
@@ -123,7 +123,7 @@ public class FileGeneratorService {
             Font fontHead = FontFactory.getFont(FontFactory.TIMES_BOLD, 16, BaseColor.BLUE);
             Font fontBody = FontFactory.getFont(FontFactory.TIMES, 12, BaseColor.BLACK);
             Font fontSpace = FontFactory.getFont(FontFactory.TIMES, 8);
-            document.add(new Paragraph("Report costs of digitalization for single magazin: ", fontHead));
+            document.add(new Paragraph("Report costs of digitization for single magazin: ", fontHead));
             document.add(new Paragraph("\n", fontSpace));
             document.add(new Paragraph("Title: " + magazine.getTitle(), fontBody));
             document.add(new Paragraph("\n", fontSpace));
@@ -131,9 +131,9 @@ public class FileGeneratorService {
             document.add(new Paragraph("\n", fontSpace));
             document.add(new Paragraph("First digitalized year's issue: " + magazine.getFirstScannedYear(), fontBody));
             document.add(new Paragraph("\n", fontSpace));
-            document.add(new Paragraph("Price of digitalization on start: " + startPriceMagazine + " PLN", fontBody));
+            document.add(new Paragraph("Price of digitization on start: " + startPriceMagazine + " PLN", fontBody));
             document.add(new Paragraph("\n", fontSpace));
-            document.add(new Paragraph("Price of digitalization at the indicated time: " + actualPriceMagazine + " PLN", fontBody));
+            document.add(new Paragraph("Price of digitization at the indicated time: " + actualPriceMagazine + " PLN", fontBody));
             document.close();
 
             createFile(pdfFile, response);

@@ -11,11 +11,11 @@ public class MagazineDto {
     private Long id;
     private String title;
     private String issn;
-    private Integer firstScannedYear;
-    private Integer volumesToScann;
+    private int firstScannedYear;
+    private int volumesToScann;
     private Long pagesToScann;
     private Long articles;
-    private Integer scannedVolumes;
-    private Integer volumesBigPdf;
-    private Integer volumesSmallPdf;
+    private int scannedVolumes;
+    private int volumesBigPdf;
+    private int volumesSmallPdf;
 }

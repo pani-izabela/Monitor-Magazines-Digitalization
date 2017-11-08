@@ -26,11 +26,11 @@ public class Magazine {
     private String issn;
     @Column(name = "firstScannedYear")
     @Length(min = 4, max = 4)
-    private Integer firstScannedYear;
+    private int firstScannedYear;
     @Column(name="volumesToScann")
     @NotEmpty
     @NotNull
-    private Integer volumesToScann;
+    private int volumesToScann;
     @Column(name="pagesToScann")
     @NotEmpty
     @NotNull
@@ -42,17 +42,14 @@ public class Magazine {
     @Column(name="scannedVolumes")
     @Min(value = 0, message = "The number have to be higher than 0")
     @NotEmpty(message = "This field is required")
-    //@Max(value = volumesToScann) a może to trzeba załatwić dalej ifem/wyjątkiem np. że jeśli scannedVolumes>volumesToScann
-    //to wyrzuć komunikat "podana wartość nie może być większa niż liczba nr do skanowania"
-    //to powinno być na etapie wpisywania danych do bazy czyli przy saveMagazine lub updateMagazine||createMagazine
-    private Integer scannedVolumes;
+    private int scannedVolumes;
     @Column(name="volumesBigPdf")
     @Min(value = 0, message = "The number have to be higher than 0")
     @NotEmpty(message = "This field is required")
-    private Integer volumesBigPdf;
+    private int volumesBigPdf;
     @Column(name="volumesSmallPdf")
     @Min(value = 0, message = "The number have to be higher than 0")
     @NotEmpty(message = "This field is required")
-    private Integer volumesSmallPdf;
+    private int volumesSmallPdf;
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("monitor/digitalization/magazines")
+@RequestMapping("monitor/digitization/magazines")
 public class MagazineController {
     @Autowired
     private MagazineService magazineService;
@@ -76,37 +76,37 @@ public class MagazineController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllVolumes")
-    public Integer getQuantityAllScannedVolumes(){
+    public int getQuantityAllScannedVolumes(){
         return magazineService.getQuantityAllVolumes();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllScanedVolumes")
-    public Integer getQuantityAllScanedVolumes(){
+    public int getQuantityAllScanedVolumes(){
         return magazineService.getQuantityAllScanedVolumes();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllVolumesToScanne")
-    public Integer getQuantityAllVolumesToScanne(){
+    public int getQuantityAllVolumesToScanne(){
         return magazineService.getQuantityAllVolumesToScanne();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllReadyBigPdf")
-    public Integer getQuantityAllReadyBigPdf(){
+    public int getQuantityAllReadyBigPdf(){
         return magazineService.getQuantityAllReadyBigPdf();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllBigPdfToDo")
-    public Integer getQuantityAllBigPdfToDo(){
+    public int getQuantityAllBigPdfToDo(){
         return magazineService.getQuantityAllBigPdfToDo();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllReadySmallPdf")
-    public Integer getQuantityAllReadySmallPdf(){
+    public int getQuantityAllReadySmallPdf(){
         return magazineService.getQuantityAllReadySmallPdf();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getQuantityAllSmallPdfToDo")
-    public Integer getQuantityAllSmallPdfToDo(){
+    public int getQuantityAllSmallPdfToDo(){
         return magazineService.getQuantityAllSmallPdfToDo();
     }
 

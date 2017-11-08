@@ -55,7 +55,7 @@ public class MagazineControllerTestSuite {
         when(magazineMapper.mapToMagazineDtoList(magazineList)).thenReturn(magazineDtoList);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getMagazines").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/monitor/digitization/magazines/getMagazines").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].title", is("Tytul testowy1")));
@@ -71,7 +71,7 @@ public class MagazineControllerTestSuite {
         when(magazineMapper.mapToMagazineDto(magazine)).thenReturn(magazineDto);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getMagazine")
+        mockMvc.perform(get("/monitor/digitization/magazines/getMagazine")
                 .param("magazineId", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -86,7 +86,7 @@ public class MagazineControllerTestSuite {
         doNothing().when(magazineService).deleteMagazine(magazine.getId());
 
         //When & Then
-        mockMvc.perform(delete("/monitor/digitalization/magazines/deleteMagazine")
+        mockMvc.perform(delete("/monitor/digitization/magazines/deleteMagazine")
                 .param("magazineId", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -105,7 +105,7 @@ public class MagazineControllerTestSuite {
         String jsonContent = gson.toJson(magazineDto);
 
         //When & Then
-        mockMvc.perform(put("/monitor/digitalization/magazines/updateMagazine")
+        mockMvc.perform(put("/monitor/digitization/magazines/updateMagazine")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -125,7 +125,7 @@ public class MagazineControllerTestSuite {
         String jsonContent = gson.toJson(magazineDto);
 
         //When & Then
-        mockMvc.perform(post("/monitor/digitalization/magazines/createMagazine")
+        mockMvc.perform(post("/monitor/digitization/magazines/createMagazine")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -141,7 +141,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getPriceStartFor(magazine.getId(), stage.getStage())).thenReturn(36.0);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getPriceStartFor")
+        mockMvc.perform(get("/monitor/digitization/magazines/getPriceStartFor")
                 .param("magazineId", "1")
                 .param("stage", "1")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -158,7 +158,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getPriceActualFor(magazine.getId(), stage.getStage())).thenReturn(18.75);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getPriceActualFor")
+        mockMvc.perform(get("/monitor/digitization/magazines/getPriceActualFor")
                 .param("magazineId", "1")
                 .param("stage", "3")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -175,7 +175,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getTimeStartFor(magazine.getId(), stage.getStage())).thenReturn(3.0);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getTimeStartFor")
+        mockMvc.perform(get("/monitor/digitization/magazines/getTimeStartFor")
                 .param("magazineId", "1")
                 .param("stage", "3")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -192,7 +192,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getTimeActualFor(magazine.getId(), stage.getStage())).thenReturn(0.34);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getTimeActualFor")
+        mockMvc.perform(get("/monitor/digitization/magazines/getTimeActualFor")
                 .param("magazineId", "1")
                 .param("stage", "4")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -206,7 +206,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getQuantityAllVolumes()).thenReturn(25);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllVolumes")
+        mockMvc.perform(get("/monitor/digitization/magazines/getQuantityAllVolumes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(25)));
@@ -218,7 +218,7 @@ public class MagazineControllerTestSuite {
        when(magazineService.getQuantityAllScanedVolumes()).thenReturn(10);
 
        //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllScanedVolumes")
+        mockMvc.perform(get("/monitor/digitization/magazines/getQuantityAllScanedVolumes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(10)));
@@ -230,7 +230,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getQuantityAllVolumesToScanne()).thenReturn(15);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllVolumesToScanne")
+        mockMvc.perform(get("/monitor/digitization/magazines/getQuantityAllVolumesToScanne")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(15)));
@@ -242,7 +242,7 @@ public class MagazineControllerTestSuite {
        when(magazineService.getQuantityAllReadyBigPdf()).thenReturn(9);
 
        //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllReadyBigPdf")
+        mockMvc.perform(get("/monitor/digitization/magazines/getQuantityAllReadyBigPdf")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(9)));
@@ -254,7 +254,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getQuantityAllBigPdfToDo()).thenReturn(16);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllBigPdfToDo")
+        mockMvc.perform(get("/monitor/digitization/magazines/getQuantityAllBigPdfToDo")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(16)));
@@ -266,7 +266,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getQuantityAllReadySmallPdf()).thenReturn(7);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllReadySmallPdf")
+        mockMvc.perform(get("/monitor/digitization/magazines/getQuantityAllReadySmallPdf")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(7)));
@@ -278,7 +278,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getQuantityAllSmallPdfToDo()).thenReturn(18);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getQuantityAllSmallPdfToDo")
+        mockMvc.perform(get("/monitor/digitization/magazines/getQuantityAllSmallPdfToDo")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(18)));
@@ -290,7 +290,7 @@ public class MagazineControllerTestSuite {
        when(magazineService.getPriceAllStagesStart()).thenReturn(1756.0);
 
        //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getPriceAllStagesStart")
+        mockMvc.perform(get("/monitor/digitization/magazines/getPriceAllStagesStart")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(1756.0)));
@@ -302,7 +302,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getPriceAllStagesActual()).thenReturn(1497.83);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getPriceAllStagesActual")
+        mockMvc.perform(get("/monitor/digitization/magazines/getPriceAllStagesActual")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(1497.83)));
@@ -314,7 +314,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getTimeAllStart()).thenReturn(33.34);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getTimeAllStart")
+        mockMvc.perform(get("/monitor/digitization/magazines/getTimeAllStart")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("33(h) 20(m)")));
@@ -326,7 +326,7 @@ public class MagazineControllerTestSuite {
         when(magazineService.getTimeAllActual()).thenReturn(22.0);
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getTimeAllActual")
+        mockMvc.perform(get("/monitor/digitization/magazines/getTimeAllActual")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("22(h) 0(m)")));
@@ -338,7 +338,7 @@ public class MagazineControllerTestSuite {
         doNothing().when(fileGeneratorService).getDataForSingelMagazine(anyLong(), any(HttpServletResponse.class));
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getDataForSingelMagazine")
+        mockMvc.perform(get("/monitor/digitization/magazines/getDataForSingelMagazine")
                 .param("magazineId", "5")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -350,7 +350,7 @@ public class MagazineControllerTestSuite {
         doNothing().when(fileGeneratorService).getDataForSingelMagazineToPdf(anyLong(), any(HttpServletResponse.class));
 
         //When & Then
-        mockMvc.perform(get("/monitor/digitalization/magazines/getDataForSingelMagazineToPdf")
+        mockMvc.perform(get("/monitor/digitization/magazines/getDataForSingelMagazineToPdf")
                 .param("magazineId", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Entity(name="stages_digitalization")
+@Entity(name="stages_digitization")
 public class Stage {
     @Id
     @Column(name="stage")
