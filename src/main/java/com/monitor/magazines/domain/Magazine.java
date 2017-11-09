@@ -25,31 +25,24 @@ public class Magazine {
     @NotEmpty
     private String issn;
     @Column(name = "firstScannedYear")
-    @Length(min = 4, max = 4)
     private int firstScannedYear;
     @Column(name="volumesToScann")
-    @NotEmpty
     @NotNull
     private int volumesToScann;
     @Column(name="pagesToScann")
-    @NotEmpty
     @NotNull
     private Long pagesToScann;
     @Column(name="articles")
-    @NotEmpty
     @NotNull
     private Long articles;
     @Column(name="scannedVolumes")
     @Min(value = 0, message = "The number have to be higher than 0")
-    @NotEmpty(message = "This field is required")
     private int scannedVolumes;
     @Column(name="volumesBigPdf")
     @Min(value = 0, message = "The number have to be higher than 0")
-    @NotEmpty(message = "This field is required")
     private int volumesBigPdf;
     @Column(name="volumesSmallPdf")
     @Min(value = 0, message = "The number have to be higher than 0")
-    @NotEmpty(message = "This field is required")
     private int volumesSmallPdf;
 
 }
